@@ -24,6 +24,5 @@ Projet semestre 5 Fds
   </ul>
 </ul>
 
-*M: Menu*
-
+*M: Menu* <br>
 *R: Barre de recherche*
