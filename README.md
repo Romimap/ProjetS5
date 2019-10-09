@@ -8,20 +8,13 @@ Projet semestre 5 Fds
 
 # Plan du site
 <ul>
-  <li>page d'accueil</li>
+  <li>page d'accueil*</li>
   <ul>
-    <li>menu de recherche</li>
     <li>connection</li>
     <li>inscription</li>
-    <li>prestations</li>
+    <li>prestations*</li>
     <ul>
-      <li>menu de recherche</li>
-    </ul>
-    <ul>
-      <li>page de prestation</li>
-      <ul>
-        <li>menu de recherche</li>
-      </ul>
+      <li>page de prestation*</li>
     </ul>
     <li>compte</li>
     <ul>
@@ -30,3 +23,4 @@ Projet semestre 5 Fds
     </ul>
   </ul>
 </ul>
+*menu de recherche
