@@ -23,4 +23,4 @@ Projet semestre 5 Fds
     </ul>
   </ul>
 </ul>
-** *menu de recherche **
+**\*menu de recherche**
