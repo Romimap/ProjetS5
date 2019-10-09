@@ -12,9 +12,14 @@ Projet semestre 5 Fds
   <ul>
     <li>connection</li>
     <li>inscription</li>
-    <li>les prestations</li>
+    <li>prestations</li>
     <ul>
       <li>page de prestation</li>
+    </ul>
+    <li>compte</li>
+    <ul>
+      <li>parametres</li>
+      <li>historique</li>
     </ul>
   </ul>
 </ul>
