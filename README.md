@@ -10,11 +10,18 @@ Projet semestre 5 Fds
 <ul>
   <li>page d'accueil</li>
   <ul>
+    <li>menu de recherche</li>
     <li>connection</li>
     <li>inscription</li>
     <li>prestations</li>
     <ul>
+      <li>menu de recherche</li>
+    </ul>
+    <ul>
       <li>page de prestation</li>
+      <ul>
+        <li>menu de recherche</li>
+      </ul>
     </ul>
     <li>compte</li>
     <ul>
