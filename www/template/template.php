@@ -1,14 +1,16 @@
+
 <!-- PAGE TEMPLATE -->
 <?php
-  $WWWPATH = "/www/ProjetS5/www/";
- ?>
+$WWWPATH = "/opt/lampp/htdocs/www/ProjetS5/www/";
+include($WWWPATH . "template/includes.php");
+?>
 <!doctype html>
 <html lang="fr">
-  <?php include($WWWPATH . "template/head.html"); ?>
-  <body>
-
-    <!-- PAGE -->
-
-    <?php include($WWWPATH . "template/bootstrap_scripts.html"); ?>
-  </body>
+    <?php include($WWWPATH . "template/head.html"); ?>
+    <body>
+	
+	<!-- PAGE -->
+	
+	<?php include($WWWPATH . "template/bootstrapScripts.html"); ?>
+    </body>
 </html>

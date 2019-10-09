@@ -7,39 +7,39 @@
   /**
   * a simple token class used to put tokens into forms
   */
-  public class token {
+  class token {
     private $_token;
     private $_nextToken;
 
-    __construct () {
-      $_token = null;
-      $_nextToken = hash('md5', rand()); //Generate a token
+    function __construct () {
+      $this->_token = null;
+      $this->_nextToken = hash('md5', rand()); //Generate a token
     }
 
     /**
     * returns the next token
     */
     function nextToken() {
-      return $_nextToken;
+      return $this->_nextToken;
     }
 
     function formToken() {
-      echo '<input type="hidden" name="token" value="' . $_nextToken . '"';
+      echo '<input type="hidden" name="token" value="' . $this->_nextToken . '"';
     }
 
     /**
     * returns true if the token given is valid
     */
     function verify($tokenToVerify) {
-      return $_token == $tokenToVerify;
+      return $this->_token == $tokenToVerify;
     }
 
     /**
     * cycles the tokens, a new one is generated
     */
     function cycle() {
-      $_token = $_nextToken;
-      $_nextToken = hash('md5', rand());
+      $this->_token = $this->_nextToken;
+      $this->_nextToken = hash('md5', rand());
     }
   }
  ?>
