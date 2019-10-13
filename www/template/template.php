@@ -8,6 +8,7 @@ require($WWWPATH . "template/includes.php");
     <?php include($WWWPATH . "template/head.html"); ?>
     <body>
 	<!-- BODY -->
+	    <?php include($WWWPATH . "template/bootstrapScripts.html"); ?>
     </body>
 </html>
 <?php $_SESSION['token']->cycle(); ?>
