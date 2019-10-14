@@ -11,7 +11,7 @@ require($WWWPATH . "template/includes.php");
     </head>
     <body>
 	<!-- BODY -->
-	<?php include($WWWPATH . "template/bootstrapScripts.html"); ?>
+	    <?php include($WWWPATH . "template/bootstrapScripts.html"); ?>
     </body>
 </html>
 <?php $_SESSION['token']->cycle(); ?>
