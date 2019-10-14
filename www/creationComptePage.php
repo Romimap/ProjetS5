@@ -9,10 +9,10 @@ require($WWWPATH . "template/includes.php");
     <head>
 	<?php include($WWWPATH . "template/head.html"); ?>
     </head>
-    <body class="bg-primary rounded-10">
+    <body class="bg-primary">
 	<!-- BODY -->
 	<div class="row mt-3 mb-3">
-	    <div class="shadow mx-auto bg-light p-3 rounded" style="">
+	    <div class="shadow mx-auto bg-light p-3 rounded">
 		<h3 class="text-center border-bottom mb-3 pb-3">S'enregistrer</h3>
 		<form method="POST" action="./template/creationCompte.php" id="creationCompteid">
 		    <?php $_SESSION['token']->formToken(); ?>
