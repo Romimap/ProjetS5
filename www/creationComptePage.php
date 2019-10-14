@@ -11,7 +11,7 @@ require($WWWPATH . "template/includes.php");
     </head>
     <body class="bg-primary rounded-10">
 	<!-- BODY -->
-	<div class="row mt-3">
+	<div class="row mt-3 mb-3">
 	    <div class="shadow mx-auto bg-light p-3 rounded" style="">
 		<h3 class="text-center border-bottom mb-3 pb-3">S'enregistrer</h3>
 		<form method="POST" action="./template/creationCompte.php" id="creationCompteid">
