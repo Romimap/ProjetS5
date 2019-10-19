@@ -43,18 +43,19 @@ $_SESSION['token']->formToken();
 if (isset($_POST['token']) && isset($_SESSION['token'])) {
     //Token check
     if ($_SESSION['token']->verify($_POST['token'])) {
-	//We check if the form is complete and valid (TODO: test it)
+	//We check if the form is complete and valid
 	if (isset($_POST['username']) &&
 	isUsername($_POST['username']) &&
 	isset($_POST['password']) &&
 	isPassword($_POST['password'])) {
 	    //From now on, we will consider that the form is complete, valid and
 	    //was sent by the owner of the session
-	    
+
+	    //We want usernames to be case insensitive, user TotO = user toto
 	    $_POST['username'] = strtolower($_POST['username']);
 	    
 	    //First we check if the user exists
-	    $prepared = $bdd->prepare('SELECT id, password FROM users WHERE username=:username');
+	    $prepared = $bdd->prepare('SELECT id, password, username FROM users WHERE username=:username');
 	    $values = array(":username" => $_POST['username']);	
 	    if ($prepared->execute($values)) {
 		if ($row = $prepared->fetch()) {
@@ -67,11 +68,14 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
 		    //Now that we have a hashed password, we compare it with the database
 		    if ($passwd == $row['password']) {
 			//We can now connect the user
-			/*We set an aditionnal cookie to prevent a php session steal, it is a pretty bad workaround but https isn't available
-			 *if we have a missmatch between the serverside token and the clientside token, the session will be killed*/
-			$token = hash('md5', rand());
-			if (setcookie("sessionToken", $token)) {
-			    $_SESSION['sessionToken'] = $token;
+			/* We set an aditionnal cookie to prevent a php session steal, it is a pretty bad workaround but https isn't available
+			 *if we have a missmatch between the serverside token and the clientside token, the session will be killed.*/
+			/* Each time the client requests a new page, the server will generate a new token, making it impossible for two people
+			 *to browse on the website at the same time.*/
+			$_SESSION['userToken'] = new token;
+			if (setcookie("userToken", $_SESSION['userToken']->nextToken(), time() + 3600, '/')) {
+			    //We store informations about the user, as its username, his role ... etc
+			    $_SESSION['userInfo'] = array("username" => $row['username']);
 			    $connectUserState = 0;
 			    //The user is now connected ! To check if the user is connected, we can compare the cookie with the serverside token
 			}
