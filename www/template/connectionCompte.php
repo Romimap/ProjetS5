@@ -55,7 +55,7 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
 	    $_POST['username'] = strtolower($_POST['username']);
 	    
 	    //First we check if the user exists
-	    $prepared = $bdd->prepare('SELECT id, password, username FROM users WHERE username=:username');
+	    $prepared = $bdd->prepare('SELECT id, password, username, role FROM users WHERE username=:username');
 	    $values = array(":username" => $_POST['username']);	
 	    if ($prepared->execute($values)) {
 		if ($row = $prepared->fetch()) {
@@ -75,7 +75,8 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
 			$_SESSION['userToken'] = new token;
 			if (setcookie("userToken", $_SESSION['userToken']->nextToken(), time() + 3600, '/')) {
 			    //We store informations about the user, as its username, his role ... etc
-			    $_SESSION['userInfo'] = array("username" => $row['username']);
+			    $_SESSION['userInfo'] = array("username" => $row['username'],
+							  "role" => $row['role']);
 			    $connectUserState = 0;
 			    //The user is now connected ! To check if the user is connected, we can compare the cookie with the serverside token
 			}

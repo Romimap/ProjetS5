@@ -29,5 +29,4 @@ if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = new token;
 }
 
-
 ?>
