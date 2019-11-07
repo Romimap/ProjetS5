@@ -12,9 +12,11 @@ Projet semestre 5 Fds
   <ul>
     <li>connection</li>
     <li>inscription</li>
-    <li>prestations (MR)</li>
+    <li>evenements (MR)</li>
+    <li>édition d'evenement (M)(C)</li>
+    <li>édition de roles (M)(A)</li>
     <ul>
-      <li>page de prestation (MR)</li>
+      <li>page d'evenement (MR)</li>
     </ul>
     <li>compte (M)</li>
     <ul>
@@ -26,3 +28,5 @@ Projet semestre 5 Fds
 
 *M: Menu* <br>
 *R: Barre de recherche*
+*A: Admin seulement*
+*C: Contributeur et Admin seulement*
