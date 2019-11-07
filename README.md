@@ -13,8 +13,6 @@ Projet semestre 5 Fds
     <li>connection</li>
     <li>inscription</li>
     <li>evenements (MR)</li>
-    <li>édition d'evenement (M)(C)</li>
-    <li>édition de roles (M)(A)</li>
     <ul>
       <li>page d'evenement (MR)</li>
     </ul>
@@ -23,6 +21,8 @@ Projet semestre 5 Fds
       <li>parametres (M)</li>
       <li>historique (M)</li>
     </ul>
+    <li>édition d'evenement (M)(C)</li>
+    <li>édition de roles (M)(A)</li>
   </ul>
 </ul>
 
