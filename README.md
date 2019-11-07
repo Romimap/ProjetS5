@@ -27,6 +27,6 @@ Projet semestre 5 Fds
 </ul>
 
 *M: Menu* <br>
-*R: Barre de recherche*
-*A: Admin seulement*
-*C: Contributeur et Admin seulement*
+*R: Barre de recherche* <br>
+*A: Admin seulement* <br>
+*C: Contributeur et Admin seulement* <br>
