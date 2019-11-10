@@ -34,19 +34,13 @@ require($WWWPATH . "template/includes.php");
 		    </div>
 		    <div class="form-group" id="firstNameid">
 			<label>Prénom</label>
-			<input type="text" class="form-control" name="firstName"/>
+			<input type="text" class="form-control" name="prenom"/>
 			<small class="form-text text-danger invisible" id="danger">Le prénom doit contenir au plus 20 caractères et ne doit contenir aucun caractère spéciaux.</small>
 		    </div>
 		    <div class="form-group" id="lastNameid">
 			<label>Nom</label>
-			<input type="text" class="form-control" name="lastName"/>
+			<input type="text" class="form-control" name="nom"/>
 			<small class="form-text text-danger invisible" id="danger">Le nom doit contenir au plus 20 caractères et ne doit contenir aucun caractère spéciaux.</small>
-		    </div>
-		    <div class="form-group" id="cityid">
-			<label>Ville*</label>
-			<input type="text" class="form-control" name="city"/>
-			<small class="form-text text-muted">Le nom de la ville servira aux autres utilisateurs à localiser les services que vous proposerez !</small>
-			<small class="form-text text-danger invisible" id="danger">Le nom de la ville doit contenir entre 1 et 20 caractères et ne doit contenir aucun caractère spéciaux.</small>
 		    </div>
 		    <div class="form-group" id="emailid">
 			<label>Email*</label>
@@ -84,7 +78,6 @@ require($WWWPATH . "template/includes.php");
 	     if (!testInput("firstNameid", regName)) { valid = false; }
 	     if (!testInput("lastNameid", regName)) { valid = false; }
 	     if (!testInput("lastNameid", regName)) { valid = false; }
-	     if (!testInput("cityid", regNameNeed)) { valid = false; }
 	     if (!testInput("emailid", regMail)) { valid = false; }
 
 	     //password match test

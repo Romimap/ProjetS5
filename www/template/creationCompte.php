@@ -54,7 +54,8 @@ function isMail ($str) {
 /**
  * Needs a token and a complete, valid form
  * 
- * token, username, password, passwordConfirmation, firstName, lastName, email, city
+ * requiered: token, username, password, passwordConfirmation
+ * not requiered: prenom, nom, email
  */
 
 $createUserState = -1; //-1 error, -2 username already taken, -3 email already taken, 0 success
@@ -71,14 +72,12 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
 	    isPassword($_POST['password']) &&
 	    isset($_POST['passwordConfirmation']) &&
 	    isPassword($_POST['passwordConfirmation']) &&
-	    isset($_POST['firstName']) &&
-	    isName($_POST['firstName']) &&
-	    isset($_POST['lastName']) &&
-	    isName($_POST['lastName']) &&
+	    isset($_POST['prenom']) &&
+	    isName($_POST['prenom']) &&
+	    isset($_POST['nom']) &&
+	    isName($_POST['nom']) &&
 	    isset($_POST['email']) &&
-	    isMail($_POST['email']) &&
-	    isset($_POST['city']) &&
-	    isName($_POST['city'])) {
+	    isMail($_POST['email'])) {
 	    //From now on, we will consider that the form is complete, valid and
 	    //was sent by the owner of the session
 	    $_POST['username'] = strtolower($_POST['username']);
@@ -86,8 +85,8 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
 
 	    //First we check if the passwords match
 	    if ($_POST['password'] == $_POST['passwordConfirmation']) {
-		//Then we check if the username or email is already taken*
-		$prepared = $bdd->prepare('SELECT username, email FROM users WHERE username=:username OR email=:email');
+		//Then we check if the username or email is already taken
+		$prepared = $bdd->prepare('SELECT username, email FROM membres WHERE username=:username OR email=:email');
 		$values = array(":username" => $_POST['username'], ":email" => $_POST['email']);
 		if ($prepared->execute($values)) {
 		    if ($row = $prepared->fetch()) {
@@ -99,16 +98,15 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
 		    } else {
 			//No rows were returned, it means that we can add a new user with that username and email
 			//First we start by adding a new row with everything but the password, so we can get its id and generate a salt
-			$prepared = $bdd->prepare('INSERT INTO users (username, firstname, lastname, email, city) ' .
-						  'VALUES (:username, :firstname, :lastname, :email, :city);');
+			$prepared = $bdd->prepare('INSERT INTO membres (username, prenom, nom, email) ' .
+						  'VALUES (:username, :prenom, :nom, :email);');
 			$values = array(":username" => $_POST['username'],
-					":firstname" => $_POST['firstName'],
-					":lastname" => $_POST['lastName'],
-					":email" => $_POST['email'],
-					":city" => $_POST['city'],);
+					":prenom" => $_POST['prenom'],
+					":nom" => $_POST['nom'],
+					":email" => $_POST['email']);
 			if ($prepared->execute($values)) {
 			    //Now we get the id of the new user
-			    $prepared = $bdd->prepare('SELECT id FROM users WHERE username=:username');
+			    $prepared = $bdd->prepare('SELECT id FROM membres WHERE username=:username');
 			    $values = array(":username" => $_POST['username']);
 			    if ($prepared->execute($values)) {
 				if ($row = $prepared->fetch()) {
@@ -117,7 +115,7 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
 				    $salt = substr(hash('md5', $id * 57), 0, 8); //the salt is the first 8 chars of a hash of id * 57
 				    $passwd = hash('sha256', $_POST['password'] . $salt);
 				    
-				    $prepared = $bdd->prepare('UPDATE users SET password=:password WHERE id=:id');
+				    $prepared = $bdd->prepare('UPDATE membres SET password=:password WHERE id=:id');
 				    $values = array(":password" => $passwd,
 						    ":id" => $row['id']);
 				    if ($prepared->execute($values)) {
