@@ -55,8 +55,8 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
 	    $_POST['username'] = strtolower($_POST['username']);
 	    
 	    //First we check if the user exists
-	    $prepared = $bdd->prepare('SELECT id, password, username, role FROM users WHERE username=:username');
-	    $values = array(":username" => $_POST['username']);	
+	    $prepared = $bdd->prepare('SELECT id, password, username, email, role FROM membres WHERE username=:username');
+	    $values = array(":username" => $_POST['username']);
 	    if ($prepared->execute($values)) {
 		if ($row = $prepared->fetch()) {
 		    //The user exists, we use its id to calculate its hashed and salted password
