@@ -33,11 +33,11 @@ CREATE TABLE evenement (
 
 
 CREATE TABLE inscriptions (
-  id int(11) NOT NULL UNIQUE AUTO_INCREMENT,
-  id_evenement int(11) NOT NULL,
-  id_membre int(11) NOT NULL,
-  note tinyint(4) NOT NULL DEFAULT 0,
-  commentaire varchar(240) DEFAULT NULL,
+  id INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
+  id_evenement INT(11) NOT NULL,
+  id_membre INT(11) NOT NULL,
+  note TINYINT(4) NOT NULL DEFAULT 0,
+  commentaire VARCHAR(240) DEFAULT NULL,
   --KEYS
   PRIMARY KEY (id),
   KEY fk_membre (id_membre),
@@ -48,7 +48,7 @@ CREATE TABLE inscriptions (
 )
 
 CREATE TABLE membres (
-  id int(11) NOT NULL UNIQUE AUTO_INCREMENT,
+  id INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
   username VARCHAR(20) NOT NULL,
   password VARCHAR(128) NOT NULL,
   nom VARCHAR(20) DEFAULT NULL,
