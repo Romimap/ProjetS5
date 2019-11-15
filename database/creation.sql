@@ -83,9 +83,10 @@ CREATE TABLE taxonomie (
   
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- -----------------------------------
--- ajout des clefs etrangeres
--- -----------------------------------
+
+-- -----------------------------------------------------
+-- ajout des clefs étrangères
+-- -----------------------------------------------------
 
 ALTER TABLE evenement
   ADD CONSTRAINT fk_evenement_membre FOREIGN KEY (id_membre) REFERENCES membres (id),
