@@ -38,8 +38,8 @@ CREATE TABLE inscriptions (
   commentaire VARCHAR(240) DEFAULT NULL,
   -- KEYS
   PRIMARY KEY (id),
-  KEY fk_membre (id_membre),
-  KEY fk_evenement (id_evenement)
+  KEY k_membre (id_membre),
+  KEY k_evenement (id_evenement)
   
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -69,7 +69,7 @@ CREATE TABLE photos (
   lien VARCHAR(240) NOT NULL,
   -- KEYS
   PRIMARY KEY (id),
-  KEY fk (id_evenement)
+  KEY k (id_evenement)
   
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -79,7 +79,7 @@ CREATE TABLE taxonomie (
   mot VARCHAR(20) NOT NULL,
   -- KEYS
   PRIMARY KEY (id),
-  KEY fk (parent)
+  KEY k (parent)
   
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
