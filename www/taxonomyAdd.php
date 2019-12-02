@@ -3,7 +3,7 @@
 $WWWPATH = "/opt/lampp/htdocs/www/ProjetS5/www/";
 require($WWWPATH . "template/includes.php");
 //Permission check
-if (isset($_SESSION['userInfo']['role']) && $_SESSION['userInfo']['role'] == "admin") {
+if (isset($_SESSION['userInfo']['role']) && $_SESSION['userInfo']['role'] == "Admin") {
     //TODO, form processing
 ?>
 <!doctype html>
@@ -40,7 +40,7 @@ if (isset($_SESSION['userInfo']['role']) && $_SESSION['userInfo']['role'] == "ad
 			}
 			echo "</ul>";
 		    }
-		    
+
 		    $prepared = $bdd->prepare("SELECT * FROM taxonomy");
 		    if ($prepared->execute()) {
 			if ($rows = $prepared->fetchAll()) {
@@ -73,7 +73,7 @@ if (isset($_SESSION['userInfo']['role']) && $_SESSION['userInfo']['role'] == "ad
 			</ul>
 		    </div>
 		</div>
-		
+
 		<h3 class="text-center pt-3 pb-3 mt-4 mb-4 bg-dark text-light">Suppréssion</h3>
 		<div class="row">
 		    <div class="col-4">
@@ -103,4 +103,3 @@ if (isset($_SESSION['userInfo']['role']) && $_SESSION['userInfo']['role'] == "ad
 $_SESSION['token']->cycle();
 }
 ?>
-
