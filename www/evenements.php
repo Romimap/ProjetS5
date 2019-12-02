@@ -61,7 +61,6 @@ require($WWWPATH . "template/includes.php");
                 exit(-1);
             }
 
-
             //We then get the event list and use $taxChilds to display events
             $prepared = $bdd->prepare('SELECT nom, description, mot, taxonomie.id FROM evenement, taxonomie WHERE evenement.id_mot_clef = taxonomie.id AND DATE(NOW()) < DATE(date_fin)');
             if ($prepared->execute()) {
