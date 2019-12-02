@@ -40,7 +40,7 @@ function isPassword ($str) {
 
 /**
  * mail regex: /^[a-z0-9._]{1,20}@{1}[a-z0-9._]{1,20}$/i
- * alphanumeric + underscore + dot  @  alphanumeric + underscore + dot 
+ * alphanumeric + underscore + dot  @  alphanumeric + underscore + dot
  * 5-50 chars, case insensitive
  */
 function isMail ($str) {
@@ -53,19 +53,18 @@ function isMail ($str) {
 
 /**
  * Needs a token and a complete, valid form
- * 
+ *
  * requiered: token, username, password, passwordConfirmation
  * not requiered: prenom, nom, email
  */
 
 $createUserState = -1; //-1 error, -2 username already taken, -3 email already taken, 0 success
 
-$_SESSION['token']->formToken();
 //We need a token and an instance of the class token
 if (isset($_POST['token']) && isset($_SESSION['token'])) {
     //Token check
     if ($_SESSION['token']->verify($_POST['token'])) {
-	//We check if the form is complete and valid (TODO: test it)
+	//We check if the form is complete and valid
 	if (isset($_POST['username']) &&
 	    isUsername($_POST['username']) &&
 	    isset($_POST['password']) &&
@@ -114,7 +113,7 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
 				    $id = (int)$row['id'];
 				    $salt = substr(hash('md5', $id * 57), 0, 8); //the salt is the first 8 chars of a hash of id * 57
 				    $passwd = hash('sha256', $_POST['password'] . $salt);
-				    
+
 				    $prepared = $bdd->prepare('UPDATE membres SET password=:password WHERE id=:id');
 				    $values = array(":password" => $passwd,
 						    ":id" => $row['id']);
