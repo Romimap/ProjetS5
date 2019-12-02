@@ -6,6 +6,9 @@ session_start();
 # @Date: 12th of October, 2019
 # @Email: romain.fournier.095@gmail.com
 
+
+//requiered: token, id
+
 //We check if the user is connected
 if (!isset($_SESSION['userInfo'])) {
     //TODO: Redirection
