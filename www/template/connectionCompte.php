@@ -1,7 +1,6 @@
 <?php
 $WWWPATH = "/opt/lampp/htdocs/www/ProjetS5/www/";
-require($WWWPATH . 'template/sql.php');
-require($WWWPATH . 'template/token.php');
+require($WWWPATH . 'template/includes.php');
 session_start();
 # @Author: FOURNIER Romain
 # @Date: 12th of October, 2019
@@ -31,7 +30,7 @@ function isPassword ($str) {
 
 /**
  * Needs a token and a complete, valid form
- * 
+ *
  * token, username, password
  */
 
@@ -53,7 +52,7 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
 
 	    //We want usernames to be case insensitive, user TotO = user toto
 	    $_POST['username'] = strtolower($_POST['username']);
-	    
+
 	    //First we check if the user exists
 	    $prepared = $bdd->prepare('SELECT id, password, username, email, role FROM membres WHERE username=:username');
 	    $values = array(":username" => $_POST['username']);
@@ -64,7 +63,7 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
 		    $id = (int)$row['id'];
 		    $salt = substr(hash('md5', $id * 57), 0, 8); //the salt is the first 8 chars of a hash of id * 57
 		    $passwd = hash('sha256', $_POST['password'] . $salt);
-		    
+
 		    //Now that we have a hashed password, we compare it with the database
 		    if ($passwd == $row['password']) {
 			//We can now connect the user
@@ -76,9 +75,11 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
 			if (setcookie("userToken", $_SESSION['userToken']->nextToken(), time() + 3600, '/')) {
 			    //We store informations about the user, as its username, his role ... etc
 			    $_SESSION['userInfo'] = array("username" => $row['username'],
-							  "role" => $row['role']);
+							                  "role" => $row['role'],
+                                              "id" => $row['id']);
 			    $connectUserState = 0;
 			    //The user is now connected ! To check if the user is connected, we can compare the cookie with the serverside token
+                //To get user info we can retrieve the SESSION[userInfo] array
 			}
 		    } else {
 			//Password missmatch
@@ -91,7 +92,7 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
 	    }
 	}
     }
-}	    
+}
 
 echo $connectUserState;
 
