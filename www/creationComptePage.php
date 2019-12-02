@@ -17,47 +17,47 @@ require($WWWPATH . "template/includes.php");
 		<form method="POST" action="./template/creationCompte.php" id="creationCompteid">
 		    <?php $_SESSION['token']->formToken(); ?>
 		    <div class="form-group" id="usernameid">
-			<label>Nom d'utilisateur*</label>
-			<input type="text" class="form-control" name="username"/>
-			<small class="form-text text-danger invisible" id="danger">Le nom d'utilisateur doit contenir entre 5 et 20 caractères et ne doit contenir aucun caractère spéciaux.</small>
+    			<label>Nom d'utilisateur*</label>
+    			<input type="text" class="form-control" name="username"/>
+    			<small class="form-text text-danger invisible" id="danger">Le nom d'utilisateur doit contenir entre 5 et 20 caractères et ne doit contenir aucun caractère spéciaux.</small>
 		    </div>
 		    <div class="form-group" id="passwordid">
-			<label>Mot de passe*</label>
-			<input type="password" class="form-control" name="password"/>
-	 		<small class="form-text text-muted">Votre mot de passe doit contenir entre 8 et 20 caracteres, les characteres speciaux "!@#._" sont autorisés.</small>
-			<small class="form-text text-danger invisible" id="danger">Le mot de passe n'est pas valide</small>
+    			<label>Mot de passe*</label>
+    			<input type="password" class="form-control" name="password"/>
+    	 		<small class="form-text text-muted">Votre mot de passe doit contenir entre 8 et 20 caracteres, les characteres speciaux "!@#._" sont autorisés.</small>
+    			<small class="form-text text-danger invisible" id="danger">Le mot de passe n'est pas valide</small>
 		    </div>
-		    <div class="form-group" id="passwordConfirmationid">
-			<label>Confirmation du mot de passe*</label>
-			<input type="password" class="form-control" name="passwordConfirmation"/>
-			<small class="form-text text-danger invisible" id="danger">Le mot de passe ne correspond pas.</small>
+    		    <div class="form-group" id="passwordConfirmationid">
+    			<label>Confirmation du mot de passe*</label>
+    			<input type="password" class="form-control" name="passwordConfirmation"/>
+    			<small class="form-text text-danger invisible" id="danger">Le mot de passe ne correspond pas.</small>
 		    </div>
-		    <div class="form-group" id="firstNameid">
-			<label>Prénom</label>
-			<input type="text" class="form-control" name="prenom"/>
-			<small class="form-text text-danger invisible" id="danger">Le prénom doit contenir au plus 20 caractères et ne doit contenir aucun caractère spéciaux.</small>
+    		    <div class="form-group" id="firstNameid">
+    			<label>Prénom</label>
+    			<input type="text" class="form-control" name="prenom"/>
+    			<small class="form-text text-danger invisible" id="danger">Le prénom doit contenir au plus 20 caractères et ne doit contenir aucun caractère spéciaux.</small>
 		    </div>
-		    <div class="form-group" id="lastNameid">
-			<label>Nom</label>
-			<input type="text" class="form-control" name="nom"/>
-			<small class="form-text text-danger invisible" id="danger">Le nom doit contenir au plus 20 caractères et ne doit contenir aucun caractère spéciaux.</small>
+    		    <div class="form-group" id="lastNameid">
+    			<label>Nom</label>
+    			<input type="text" class="form-control" name="nom"/>
+    			<small class="form-text text-danger invisible" id="danger">Le nom doit contenir au plus 20 caractères et ne doit contenir aucun caractère spéciaux.</small>
 		    </div>
-		    <div class="form-group" id="emailid">
-			<label>Email*</label>
-			<input type="text" class="form-control" name="email"/>
-			<small class="form-text text-muted">Votre email ne sera pas affiché aux autres utilisateurs</small>
-			<small class="form-text text-danger invisible" id="danger">email non valide</small>
+    		    <div class="form-group" id="emailid">
+    			<label>Email*</label>
+    			<input type="text" class="form-control" name="email"/>
+    			<small class="form-text text-muted">Votre email ne sera pas affiché aux autres utilisateurs</small>
+    			<small class="form-text text-danger invisible" id="danger">email non valide</small>
 		    </div>
-		    <div class="border-top">
-			<small class="font-italic text-muted">* Champs obligatoires</small>
+    		    <div class="border-top">
+    			<small class="font-italic text-muted">* Champs obligatoires</small>
 		    </div>
-		    <div class="form-group text-center">
-			<input type="submit" value="S'enregistrer"/>
+    		    <div class="form-group text-center">
+    			<input type="submit" value="S'enregistrer"/>
 		    </div>
 		</form>
 	    </div>
 	</div>
-	
+
 	<?php include($WWWPATH . "template/bootstrapScripts.html"); ?>
 	<script>
 	 /**
@@ -87,7 +87,7 @@ require($WWWPATH . "template/includes.php");
 	     } else {
 		 document.querySelector("#passwordConfirmationid small#danger").className = "form-text text-danger invisible";
 	     }
-	     
+
 	     return valid;
 	 };
 
@@ -109,7 +109,7 @@ require($WWWPATH . "template/includes.php");
 	 }
 
 	 /**
-	  * changes the background color of the password confirmation 
+	  * changes the background color of the password confirmation
 	  * if it matches the password or not
 	  */
 	 var input = document.getElementById("passwordConfirmationid");
@@ -128,4 +128,3 @@ require($WWWPATH . "template/includes.php");
     </body>
 </html>
 <?php $_SESSION['token']->cycle(); ?>
-
