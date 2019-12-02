@@ -97,8 +97,8 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
 		    } else {
 			//No rows were returned, it means that we can add a new user with that username and email
 			//First we start by adding a new row with everything but the password, so we can get its id and generate a salt
-			$prepared = $bdd->prepare('INSERT INTO membres (username, prenom, nom, email) ' .
-						  'VALUES (:username, :prenom, :nom, :email);');
+			$prepared = $bdd->prepare('INSERT INTO membres (username, prenom, nom, email, password) ' .
+						  'VALUES (:username, :prenom, :nom, :email, 0);');
 			$values = array(":username" => $_POST['username'],
 					":prenom" => $_POST['prenom'],
 					":nom" => $_POST['nom'],
