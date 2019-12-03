@@ -22,7 +22,8 @@ Projet semestre 5 Fds
       <li>historique (M)</li>
     </ul>
     <li>édition d'evenement (M)(C)</li>
-    <li>édition de roles (M)(A)</li>
+    <li>édition des roles (M)(A)</li>
+    <li>édition des catégories (M)(A)</li>
   </ul>
 </ul>
 
