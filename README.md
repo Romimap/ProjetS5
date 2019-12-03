@@ -8,22 +8,22 @@ Projet semestre 5 Fds
 
 ## Plan du site
 <ul>
-  <li>page d'accueil (MR)</li>
+  <li>page d'accueil (MR)✓</li>
   <ul>
-    <li>connection</li>
-    <li>inscription</li>
-    <li>evenements (MR)</li>
+    <li>connection ✓</li>
+    <li>inscription ✓</li>
+    <li>evenements (MR)✓</li>
     <ul>
-      <li>page d'evenement (MR)</li>
+      <li>page d'evenement (MR)✓</li>
     </ul>
-    <li>compte (M)</li>
+    <li>compte (M)✓</li>
     <ul>
-      <li>parametres (M)</li>
-      <li>historique (M)</li>
+      <li>parametres (M)✓</li>
+      <li>historique (M)✓</li>
     </ul>
     <li>édition d'evenement (M)(C)</li>
-    <li>édition des roles (M)(A)</li>
-    <li>édition des catégories (M)(A)</li>
+    <li>édition des roles (M)(A) ✓✓</li>
+    <li>édition des catégories (M)(A) ✓✓</li>
   </ul>
 </ul>
 
@@ -31,3 +31,5 @@ Projet semestre 5 Fds
 *R: Barre de recherche* <br>
 *A: Admin seulement* <br>
 *C: Contributeur et Admin seulement* <br>
+*✓: Base terminée*
+*✓✓: Page terminée*
