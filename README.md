@@ -16,7 +16,7 @@ Projet semestre 5 Fds
     <ul>
       <li>page d'evenement (MR)✓</li>
     </ul>
-    <li>compte (M)✓</li>
+    <li>compte (M)✅</li>
     <ul>
       <li>parametres (M)✓</li>
       <li>historique (M)✓</li>
