@@ -22,8 +22,8 @@ Projet semestre 5 Fds
       <li>historique (M)✓</li>
     </ul>
     <li>édition d'evenement (M)(C)</li>
-    <li>édition des roles (M)(A) ✓✓</li>
-    <li>édition des catégories (M)(A) ✓✓</li>
+    <li>édition des roles (M)(A) ✅</li>
+    <li>édition des catégories (M)(A) ✅</li>
   </ul>
 </ul>
 
@@ -31,5 +31,5 @@ Projet semestre 5 Fds
 *R: Barre de recherche* <br>
 *A: Admin seulement* <br>
 *C: Contributeur et Admin seulement* <br>
-*✓: Base terminée*
-*✓✓: Page terminée*
+*✓: Base terminée* <br>
+*✅: Page terminée*
