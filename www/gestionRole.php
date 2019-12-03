@@ -58,7 +58,7 @@ if (isset($_SESSION['userInfo']['role']) && $_SESSION['userInfo']['role'] == "Ad
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text" style="height: 40px;">
-                                                    <input type="checkbox" name="id[' . $row['id'] . '] value="0"/>
+                                                    <input type="radio" name="id" value="' . $row['id'] . '"/>
                                                 </div>
                                             </div>
                                             <p class="form-control text-capitalize" style="height: 40px;">' . $row['username'] . '</p>
