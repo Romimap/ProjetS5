@@ -42,13 +42,14 @@ require($WWWPATH . "template/includes.php");
 
             //values check
             if (!(isset($_GET['taxId']) && is_numeric($_GET['taxId']))) {
-                echo "error  -3";
-                exit(-3);
+                $ancestor = 0;
+            } else {
+                $ancestor = $_GET['taxId'];
             }
 
             //We parse the taxonomy table onto an array, as $taxArray[id] = parent
             //Then we use this array to make a list of ids that are childs of an ancestor
-            $ancestor = $_GET['taxId'];
+
             $taxArray = array();
             $prepared = $bdd->prepare('SELECT * FROM taxonomie');
             if ($prepared->execute()) {
