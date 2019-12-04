@@ -1,0 +1,18 @@
+body { 
+background: #007bff;
+background: linear-gradient(to right,#FEAC5E, #C779D0, #4BC0C8););
+padding-top:30px; 
+}
+
+.form-control { margin-bottom: 10px; }
+
+textarea {
+   resize: none;
+}
+
+label {
+    display: block;
+    text-align: center;
+    line-height: 150%;
+    font-size: .85em;
+}
