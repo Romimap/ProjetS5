@@ -6,6 +6,7 @@ require($WWWPATH . "template/includes.php");
 <!doctype html>
 <html lang="fr">
     <head>
+    <link rel="stylesheet" type="text/css" href="css/stylepro.css" media="screen" />
 	<?php include($WWWPATH . "template/head.html"); ?>
 	<!-- HEAD -->
     </head>
