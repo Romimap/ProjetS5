@@ -5,4 +5,5 @@ require($WWWPATH . "template/includes.php");
 setcookie('userToken', time() - 3600);
 session_destroy();
 session_start();
+header("location: ../index.php")
 ?>
