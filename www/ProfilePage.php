@@ -11,7 +11,7 @@ require($WWWPATH . "template/includes.php");
     </head>
     <body>
         <!-- BODY -->
-        <?php include($WWWPATH . "template/menu/menuClean.html") ?>
+        <?php include($WWWPATH . "template/menu/menu.php") ?>
 
         <?php
         //page display
