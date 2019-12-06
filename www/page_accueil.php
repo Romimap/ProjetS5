@@ -7,10 +7,11 @@ require($WWWPATH . "template/includes.php");
 <html lang="fr">
     <head>
 	<?php include($WWWPATH . "template/head.html"); ?>
+    <link rel="stylesheet" type="text/css" href="css/stylespa.css" media="screen" />
 	<!-- HEAD -->
     </head>
   <body class="d-flex flex-column">
-    <?php include($"")
+    <?php include($WWWPATH . "template/menu/menuClean.html"); ?>
     <div id="page-content">
       <div class="container text-center">
         <div class="row justify-content-center">
