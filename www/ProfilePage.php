@@ -87,7 +87,7 @@
                             <strong class="h6 d-block text-warning mb-1">theme</strong>
                             <p class="text-secondary">description</p>
                         </div>
-                    </div>    
+                    </div>
                 </section>
             </div>
         </div>
@@ -133,7 +133,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
-                            Historique   
+                            Historique
                         </a>
                     </li>
                     <li class="nav-item">
@@ -150,20 +150,20 @@
                         <dl class="row mt-4 mb-4 pb-3">
                             <dt class="col-sm-3">tel</dt>
                             <dd class="col-sm-9">Si rien n'est affiché, veuillez saisir vos informtions dans "modifier"</dd>
-                            
+
                             <dt class="col-sm-3">addresse</dt>
                             <dd class="col-sm-9">
                                 <address class="mb-0">
                                     Si rien n'est affiché, veuillez saisir vos informtions dans "modifier"
                                 </address>
                             </dd>
-                            
+
                             <dt class="col-sm-3">adresse mail</dt>
                             <dd class="col-sm-9">
                                 <a href="mailto:son.adresse@gmail.com">mail@mail.com</a>
                             </dd>
                         </dl>
-                        
+
                         <h6 class="text-uppercase font-weight-light text-secondary">
                             Qui suis-je ?
                         </h6>
@@ -173,7 +173,7 @@
 
                             <dt class="col-sm-3">Birthday</dt>
                             <dd class="col-sm-9">Si rien n'est affiché, veuillez saisir vos informtions dans "modifier"</dd>
-                            
+
                             <dt class="col-sm-3">Gender</dt>
                             <dd class="col-sm-9">Si rien n'est affiché, veuillez saisir vos informtions dans "modifier"</dd>
                         </dl>
