@@ -131,6 +131,6 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
     }
 }
 
-echo $createUserState;
+header("location: ../index.php");
 
 ?>
