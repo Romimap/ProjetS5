@@ -11,7 +11,7 @@ require($WWWPATH . "template/includes.php");
 	<!-- HEAD -->
     </head>
   <body class="d-flex flex-column">
-    <?php include($WWWPATH . "template/menu/menuClean.html"); ?>
+      <?php include($WWWPATH . "template/menu/menu.php")?>
     <div id="page-content">
       <div class="container text-center">
         <div class="row justify-content-center">
@@ -31,25 +31,16 @@ require($WWWPATH . "template/includes.php");
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner" role="listbox">
-        <!-- Slide One - Set the background image for this slide in the line below -->
         <div class="carousel-item active" style="background-image: url('https://g2e-gamers2mediasl.netdna-ssl.com/wp-content/uploads/2019/08/are-you-ready.jpg')">
           <div class="carousel-caption d-none d-md-block">
-            <!--<h2 class="display-4">A la une</h2>
-            <p class="lead"> Commandez le service de votre choix à l’un de nos vendeurs </p>-->
           </div>
         </div>
-        <!-- Slide Two - Set the background image for this slide in the line below -->
         <div class="carousel-item" style="background-image: url('https://mgoblue.com/images/2018/8/17/gf_poster_2018.jpg')">
           <div class="carousel-caption d-none d-md-block">
-            <!--<h2 class="display-4">A la une</h2>
-            <p class="lead">Échangez par chat sur le site jusqu’à la livraison en toute sécurité</p>-->
           </div>
         </div>
-        <!-- Slide Three - Set the background image for this slide in the line below -->
         <div class="carousel-item" style="background-image: url('https://www.numerama.com/content/uploads/2019/08/zevent-2019.jpg')">
           <div class="carousel-caption d-none d-md-block">
-            <!--<h2 class="display-4">A la une</h2>
-            <p class="lead">Le vendeur n’est payé que lorsque la commande est terminée </p>-->
           </div>
         </div>
       </div>
@@ -79,50 +70,9 @@ require($WWWPATH . "template/includes.php");
     <section id="une" class="py-5">
       <div class="container">
         <h1 class="display-4"><center>Ce que vous avez raté</center></h1>
-        <!-- <p class="lead">The background images for the slider are set directly in the HTML using inline CSS. The images in this snippet are from <a href="https://unsplash.com">Unsplash</a>, taken by <a href="https://unsplash.com/@joannakosinska">Joanna Kosinska</a>!</p> -->
         <p class="lead">Pas de panique, il y en aura sûrement d'autres.</p>
       </div>
     </section>
-    <!--<div class="container">
-      <div class="row">
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-0 shadow">
-            <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="...">
-            <div class="card-body text-center">
-              <h5 class="card-title mb-0">Team Member</h5>
-              <div class="card-text text-black-50">Web Developer</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-0 shadow">
-            <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-            <div class="card-body text-center">
-              <h5 class="card-title mb-0">Team Member</h5>
-              <div class="card-text text-black-50">Web Developer</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-0 shadow">
-            <img src="https://source.unsplash.com/sNut2MqSmds/500x350" class="card-img-top" alt="...">
-            <div class="card-body text-center">
-              <h5 class="card-title mb-0">Team Member</h5>
-              <div class="card-text text-black-50">Web Developer</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-0 shadow">
-            <img src="https://source.unsplash.com/ZI6p3i9SbVU/500x350" class="card-img-top" alt="...">
-            <div class="card-body text-center">
-              <h5 class="card-title mb-0">Team Member</h5>
-              <div class="card-text text-black-50">Web Developer</div>
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <!-- /.row -->
 
       <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
         <div class="container">
