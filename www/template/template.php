@@ -10,9 +10,9 @@ require($WWWPATH . "template/includes.php");
 	<!-- HEAD -->
     </head>
     <body>
+    <?php include($WWWPATH . "template/menu/menu.php"); ?>
 	<!-- BODY -->
 	    <?php include($WWWPATH . "template/bootstrapScripts.html"); ?>
     </body>
 </html>
 <?php $_SESSION['token']->cycle(); ?>
-
