@@ -31,6 +31,7 @@ if (isset($_SESSION['userInfo']['role']) && $_SESSION['userInfo']['role'] == "Ad
 	<?php include($WWWPATH . "template/head.html"); ?>
     </head>
     <body>
+    <?php include($WWWPATH . "template/menu/menu.php"); ?>
 	<!-- BODY -->
     <?php
         //Display search bar

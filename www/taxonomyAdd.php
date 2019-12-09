@@ -64,6 +64,7 @@ if (isset($_SESSION['userInfo']['role']) && $_SESSION['userInfo']['role'] == "Ad
     </head>
     <body>
 	<!-- BODY -->
+    <?php include($WWWPATH . "template/menu/menu.php"); ?>
 	<div class="row">
 	    <div class="col-12 col-md-4 border-right">
 		<h3 class="text-center pt-3 pb-3 mb-4 bg-dark text-light">Catégories</h3>
