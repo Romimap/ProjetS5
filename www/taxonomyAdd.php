@@ -26,18 +26,29 @@ if (isset($_SESSION['userInfo']['role']) && $_SESSION['userInfo']['role'] == "Ad
                 && $_POST['id'] != 0) {
                     //We have to remove a new word to the taxonomy table
                     //First we set the parent of all the childs of the element to the parent of the element
+                    //We also change the foreign key on the table 'evenements' to be the parent of the element
                     $bdd->query("SET foreign_key_checks = 0");
-                    $prepared = $bdd->prepare("UPDATE taxonomie SET parent=(
-                        SELECT parent FROM taxonomie WHERE id=:id
-                    ) WHERE parent=:id1;");
-                    $values = array(':id' => $_POST['id'], ':id1' => $_POST['id']);
+                    $sql = "UPDATE evenement SET id_mot_clef=(
+                                SELECT parent FROM taxonomie WHERE id=$_POST[id] LIMIT 1
+                            )
+                            WHERE id_mot_clef=$_POST[id];
+                            UPDATE taxonomie SET parent=(
+                                SELECT parent FROM taxonomie WHERE id=$_POST[id] LIMIT 1
+                            )
+                            WHERE parent=$_POST[id];";
+                    try {
+                        $bdd->exec($sql);
+                    }
+                    catch (PDOException $e)
+                    {
+                        echo $e->getMessage();;
+                        die();
+                    }
+                    //Then if succeded we remove the element
+                    $prepared = $bdd->prepare("DELETE FROM taxonomie WHERE id=:id");
+                    $values = array(':id' => $_POST['id']);
                     if ($prepared->execute($values)) {
-                        //Then if succeded we remove the element
-                        $prepared = $bdd->prepare("DELETE FROM taxonomie WHERE id=:id");
-                        $values = array(':id' => $_POST['id']);
-                        if ($prepared->execute($values)) {
-                            //We removed an element from the tree
-                        }
+                        //We removed an element from the tree
                     }
                     $bdd->query("SET foreign_key_checks = 1");
                 }
