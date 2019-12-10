@@ -13,6 +13,13 @@ require($WWWPATH . "template/includes.php");
             document.getElementById('taxonomyForm').submit();
         }
     </script>
+    <style media="screen">
+    body{
+        padding-bottom: 50px;
+        background: #007bff;
+        background: linear-gradient(to right, #0062E6, #33AEFF);
+    }
+    </style>
     </head>
     <body>
         <?php include($WWWPATH . "template/menu/menu.php"); ?>
