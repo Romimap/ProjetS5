@@ -213,28 +213,55 @@ require($WWWPATH . "template/includes.php");
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <?php
                                     if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-                                        $prepared = $bdd->prepare("SELECT evenement.id AS eid, nom, date_debut, date_fin FROM inscriptions, evenement
-                                        WHERE inscriptions.id_evenement=evenement.id AND inscriptions.id_membre=:id");
-                                        $values = array(':id' => $_GET['id']);
-                                        if ($prepared->execute($values)) {
-                                            while ($row = $prepared->fetch()) {
-                                                setlocale(LC_ALL, 'fr_FR');
-                                                $dateDebut = strtotime($row['date_debut']);
-                                                $dateStr = strftime("%e %B", $dateDebut);
-                                                $dateFin = strtotime($row['date_fin']);
-                                                if ($row['date_fin'] != $row['date_debut'])
-                                                    $dateStr = "du " . $dateStr . " au " . strftime("%e %B", $dateFin);
-                                                echo '
-                                                <div class="col-12">
-                                                    <div class="card mt-3">
-                                                        <div class="card-body">
-                                                            <h4 class="card-title">'. $row['nom'] .'</h4>
-                                                            <p class="card-text text-muted text-right">'. $dateStr .'</p>
-                                                            <a href="PageEvenement.php?id='. $row['eid'] .'" class="stretched-link"></a>
+                                        if ($_SESSION['userInfo']['role'] == 'Visiteur') {
+                                            $prepared = $bdd->prepare("SELECT evenement.id AS eid, nom, date_debut, date_fin FROM inscriptions, evenement
+                                            WHERE inscriptions.id_evenement=evenement.id AND inscriptions.id_membre=:id");
+                                            $values = array(':id' => $_GET['id']);
+                                            if ($prepared->execute($values)) {
+                                                while ($row = $prepared->fetch()) {
+                                                    setlocale(LC_ALL, 'fr_FR');
+                                                    $dateDebut = strtotime($row['date_debut']);
+                                                    $dateStr = strftime("%e %B", $dateDebut);
+                                                    $dateFin = strtotime($row['date_fin']);
+                                                    if ($row['date_fin'] != $row['date_debut'])
+                                                        $dateStr = "du " . $dateStr . " au " . strftime("%e %B", $dateFin);
+                                                    echo '
+                                                    <div class="col-12">
+                                                        <div class="card mt-3">
+                                                            <div class="card-body">
+                                                                <h4 class="card-title">'. $row['nom'] .'</h4>
+                                                                <p class="card-text text-muted text-right">'. $dateStr .'</p>
+                                                                <a href="PageEvenement.php?id='. $row['eid'] .'" class="stretched-link"></a>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                ';
+                                                    ';
+                                                }
+                                            }
+                                        } else if ($_SESSION['userInfo']['role'] == 'Contributeur') {
+                                            $prepared = $bdd->prepare("SELECT id AS eid, nom, date_debut, date_fin FROM evenement
+                                            WHERE id_membre=:id");
+                                            $values = array(':id' => $_GET['id']);
+                                            if ($prepared->execute($values)) {
+                                                while ($row = $prepared->fetch()) {
+                                                    setlocale(LC_ALL, 'fr_FR');
+                                                    $dateDebut = strtotime($row['date_debut']);
+                                                    $dateStr = strftime("%e %B", $dateDebut);
+                                                    $dateFin = strtotime($row['date_fin']);
+                                                    if ($row['date_fin'] != $row['date_debut'])
+                                                        $dateStr = "du " . $dateStr . " au " . strftime("%e %B", $dateFin);
+                                                    echo '
+                                                    <div class="col-12">
+                                                        <div class="card mt-3">
+                                                            <div class="card-body">
+                                                                <h4 class="card-title">'. $row['nom'] .'</h4>
+                                                                <p class="card-text text-muted text-right">'. $dateStr .'</p>
+                                                                <a href="PageEvenement.php?id='. $row['eid'] .'" class="stretched-link"></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    ';
+                                                }
                                             }
                                         }
                                     }
