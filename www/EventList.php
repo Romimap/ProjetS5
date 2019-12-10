@@ -81,10 +81,16 @@ require($WWWPATH . "template/includes.php");
             <div class="col-12 col-md-9">
                 <div class="row">
                     <?php //We print the events based on the filters
-                        $prepared = $bdd->prepare("SELECT evenement.id AS eid, nom, description, mot, date_debut FROM evenement, taxonomie WHERE id_mot_clef=taxonomie.id AND id_mot_clef=:idParent");
+                        $prepared = $bdd->prepare("SELECT evenement.id AS eid, nom, description, mot, date_debut, date_fin FROM evenement, taxonomie WHERE id_mot_clef=taxonomie.id AND id_mot_clef=:idParent");
                         $values = array(':idParent' => $parentId);
                         if ($prepared->execute($values)) {
                             while ($row = $prepared->fetch()) {
+                                setlocale(LC_ALL, 'fr_FR');
+                                $dateDebut = strtotime($row['date_debut']);
+                                $dateStr = strftime("%e %B", $dateDebut);
+                                $dateFin = strtotime($row['date_fin']);
+                                if ($row['date_fin'] != $row['date_debut'])
+                                    $dateStr = "du " . $dateStr . " au " . strftime("%e %B", $dateFin);
                                 echo '
                                 <div class="col-3">
                                     <div class="card mt-3">
@@ -95,7 +101,7 @@ require($WWWPATH . "template/includes.php");
                                             <hr>
                                             <p class="card-text">'. $row['description'] .'</p>
                                             <hr>
-                                            <p class="card-text text-muted text-right">'. $row['date_debut'] .'</p>
+                                            <p class="card-text text-muted text-right">'. $dateStr .'</p>
                                             <a href="PageEvenement.php?id='. $row['eid'] .'" class="stretched-link"></a>
                                         </div>
                                     </div>
