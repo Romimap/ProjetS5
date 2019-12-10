@@ -1,0 +1,46 @@
+body{
+    padding-top: 68px;
+    padding-bottom: 50px;
+    background: #007bff;
+    background: linear-gradient(to right, #0062E6, #33AEFF);
+}
+
+hr {border-top: 1px solid #000; width:50%;}
+
+a {color: #000;}
+
+a:link{text-decoration:none;}
+
+#contact2{
+    letter-spacing:3px;
+}
+
+
+
+#author a{
+  color: #fff;
+  text-decoration: none;
+    
+}
+
+.map-container-5{
+overflow:hidden;
+padding-bottom:56.25%;
+position:relative;
+height:0;
+}
+.map-container-5 iframe{
+left:0;
+top:0;
+height:100%;
+width:100%;
+position:absolute;
+}
+
+#container {
+    width: auto;
+    background: white;
+    border-radius: 15px;
+    margin: 0 auto;
+    text-align: center;
+} 
