@@ -65,17 +65,19 @@ require($WWWPATH . "template/includes.php");
                             if ($row = $prepared->fetch()) {
                                 //The user is registered for this event, we show him the unregister form
                                 echo '
-                                <form class="" action="template/unregister.php" method="post">'
-                                    . $_SESSION['token']->formToken() .
-                                    '<input type="hidden" name="id" value="'. $_GET['id'] .'">
+                                <form class="" action="template/unregister.php" method="post">';
+                                    $_SESSION['token']->formToken();
+                                echo '
+                                    <input type="hidden" name="id" value="'. $_GET['id'] .'">
                                     <input class="btn btn-lg btn-danger btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Se désinscrire">
                                 </form>';
                             } else {
                                 //The user is not registered for this event, we show him the register form
                                 echo '
-                                <form class="" action="template/register.php" method="post">'
-                                    . $_SESSION['token']->formToken() .
-                                    '<input type="hidden" name="id" value="'. $_GET['id'] .'">
+                                <form class="" action="template/register.php" method="post">';
+                                    $_SESSION['token']->formToken();
+                                echo '
+                                    <input type="hidden" name="id" value="'. $_GET['id'] .'">
                                     <input class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="s\'inscrire">
                                 </form>';
                             }
