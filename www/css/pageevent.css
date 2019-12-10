@@ -1,5 +1,4 @@
 body{
-    padding-top: 68px;
     padding-bottom: 50px;
     background: #007bff;
     background: linear-gradient(to right, #0062E6, #33AEFF);
@@ -20,7 +19,7 @@ a:link{text-decoration:none;}
 #author a{
   color: #fff;
   text-decoration: none;
-    
+
 }
 
 .map-container-5{
@@ -43,5 +42,4 @@ position:absolute;
     border-radius: 15px;
     margin: 0 auto;
     text-align: center;
-} 
-
+}

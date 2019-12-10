@@ -38,7 +38,6 @@ require($WWWPATH . "template/includes.php");
                 <div class="col-sm-8">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11880.492291371422!2d12.4922309!3d41.8902102!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x28f1c82e908503c4!2sColosseo!5e0!3m2!1sit!2sit!4v1524815927977" width="100%" height="640" frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>
-
                 <div class="col-sm-4" id="contact2">
                     <h3><?php echo $row['mot']; ?></h3>
                     <hr class="col-6">
@@ -50,10 +49,38 @@ require($WWWPATH . "template/includes.php");
                     <hr class="col-6">
                     <i class="fas fa-phone" style="color:#000"></i> <a href="ProfilePage.php?id=<?php echo $row['uid']; ?>"><?php echo $row['username']; ?></a><br>
                     <br>
-                    <i class="fas fa-phone" style="color:#000"></i><?php echo $row['telephone']; ?><br>
-                    <i class="fa fa-envelope" style="color:#000"></i><?php echo $row['email']; ?><br>
+                    <?php
+                    if ($row['telephone'] != "")
+                        echo '<i class="fas fa-phone" style="color:#000"></i>'. $row['telephone']. '<br>';
+                    if ($row['email'] != "")
+                        echo '<i class="fas fa-phone" style="color:#000"></i>'. $row['email']. '<br>';?>
                     <br>
-                    <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">s'inscrire</button>
+                    <?php //We check if the user is connected
+                    if (isset($_SESSION['userInfo']['id']) && is_numeric($_SESSION['userInfo']['id'])) {
+                        //then we check if the user is registered for this event
+                        $prepared = $bdd->prepare("SELECT id FROM inscriptions WHERE id_evenement=:ide
+                        AND id_membre=:idm");
+                        $values = array(':ide' => $_GET['id'], ':idm' => $_SESSION['userInfo']['id']);
+                        if ($prepared->execute($values)) {
+                            if ($row = $prepared->fetch()) {
+                                //The user is registered for this event, we show him the unregister form
+                                echo '
+                                <form class="" action="template/unregister.php" method="post">'
+                                    . $_SESSION['token']->formToken() .
+                                    '<input type="hidden" name="id" value="'. $_GET['id'] .'">
+                                    <input class="btn btn-lg btn-danger btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Se désinscrire">
+                                </form>';
+                            } else {
+                                //The user is not registered for this event, we show him the register form
+                                echo '
+                                <form class="" action="template/register.php" method="post">'
+                                    . $_SESSION['token']->formToken() .
+                                    '<input type="hidden" name="id" value="'. $_GET['id'] .'">
+                                    <input class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="s\'inscrire">
+                                </form>';
+                            }
+                        }
+                    } ?>
                 </div>
             </div>
         </div>
