@@ -1,5 +1,10 @@
 <?php
-require('includes.php');
+$WWWPATH = "/opt/lampp/htdocs/www/ProjetS5/www/";
+require($WWWPATH . 'template/sql.php');
+require($WWWPATH . 'template/token.php');
+session_start();
+var_dump($_POST);
+echo '<br>' . $_SESSION['token']->nextToken();
 echo 'p';
 //We check if we have a token
 if (isset($_POST['token']) && isset($_SESSION['token'])) {
@@ -24,5 +29,4 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
         }
     }
 }
-
- ?>
+?>
