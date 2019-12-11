@@ -21,7 +21,7 @@ require($WWWPATH . "template/includes.php");
     ?>
     <div id="form">
         <form id="addform" method="post" action="template/addEvent.php">
-
+        <?php $_SESSION['token']->formToken(); ?>
         <div class="formgroup" id="name-form">
             <label for="name">Nom de l'évènement</label>
             <input type="text" id="name" name="name" />
@@ -49,13 +49,15 @@ require($WWWPATH . "template/includes.php");
 
                 <input type="number"
                    value=""
-                   min="0">
+                   min="0"
+                   name="min">
 
             <label for="end">Nombre maximum de participants:</label>
 
                 <input type="number"
                    value=""
-                   min="0">
+                   min="0"
+                   name="max">
         </div>
 
         <div class="form-group" id="theme-form">
@@ -82,6 +84,15 @@ require($WWWPATH . "template/includes.php");
     			}
 		    }
 		    ?>
+        </select>
+            <div class="form-group" id="name-form">
+                <label for="name">addresse</label>
+                <input type="text" id="name" name="adresse" />
+            </div>
+            <div class="form-group" id="name-form">
+                <label for="name">GPS</label>
+                <input type="text" id="name" name="gps" />
+            </div>
             <input type="submit" value="Ajouter l'évènement" />
         </form>
         <hr>
