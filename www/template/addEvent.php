@@ -52,10 +52,6 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
                 $_POST['max'] = "-1";
             }
 
-            //Removing accents from the address, changing the spaces and the comas as codes
-            $_POST['adresse'] = str_replace (" ", "%20", $_POST['adresse']);
-            $_POST['adresse'] = str_replace (",", "%2C", $_POST['adresse']);
-
             //We now try to insert a new event, quoting the dangerous values
             $prepared = $bdd->prepare("INSERT INTO evenement (id, id_mot_clef, id_membre, nom, description, addresse, date_debut, date_fin, effectif_min, effectif_max)
                                     VALUES (NULL, :idt, :idm, :nom, :descr, :adr, :dated, :datef, :min, :max)");
