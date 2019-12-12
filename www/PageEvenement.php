@@ -36,7 +36,7 @@ require($WWWPATH . "template/includes.php");
             <hr>
             <div class="row">
                 <div class="col-sm-8">
-                    <?php //Removing accents from the address, changing the spaces and the comas as codes
+                    <?php //changing the spaces and the comas as codes
                     $gmapAdr = str_replace (" ", "%20", $row['addresse']);
                     $gmapAdr  = str_replace (",", "%2C", $gmapAdr ); ?>
                     <iframe src="<?php echo "https://maps.google.com/maps?q=" . $gmapAdr . "&hl=fr&z=15&output=embed"; ?>" width="100%" height="640" frameborder="0" style="border:0" allowfullscreen></iframe>
