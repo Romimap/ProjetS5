@@ -16,51 +16,62 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
         var_dump($_POST);
     	//We check if the form is complete and valid
         if (isset($_SESSION['userInfo']['role']) && $_SESSION['userInfo']['role'] == 'Contributeur'
-            && isset($_POST['name'])
-            && preg_match('/^[a-z0-9\s.,\']*$/i', $_POST['name']) //alphanum with space and quotes (dangerous)
-            && isset($_POST['event-start']) && $_POST['event-start'] != "" //there is a date
-            && isset($_POST['event-end'])
-            && isset($_POST['description'])
-            && preg_match('/^[a-z0-9\s.,\']*$/i', $_POST['description']) //alphanum with space and quotes (dangerous)
-            && isset($_POST['adresse'])
-            && preg_match('/^[a-z0-9\s.,\']*$/i', $_POST['adresse']) //alphanum with space and quotes (dangerous)
-            && isset($_POST['gps']) //dangerous
+            && isset($_POST['name'])//(dangerous)
+            && isset($_POST['event_start']) && $_POST['event_start'] != "" //there is a date
+            && isset($_POST['event_end'])
+            && isset($_POST['description'])//(dangerous)
+            && isset($_POST['adresse'])//(dangerous)
             && isset($_POST['min']) && ($_POST['min'] == "" || is_numeric($_POST['min']))
             && isset($_POST['max']) && ($_POST['max'] == "" || is_numeric($_POST['max']))
             && isset($_POST['theme']) && is_numeric($_POST['theme'])) {
+                echo 'c';
             //The form is complete, but there are still dangerous values
 
             //First we convert the dates to the mysql format
-            $dateDebut=date("Y-m-d H:i:s",strtotime($_POST['event-start']));
-            if ($_POST['event-end'] == "") {
+            $dateDebut=date("Y-m-d H:i:s",strtotime($_POST['event_start']));
+            if ($_POST['event_end'] == "") {
                 //If there is no end date, we set it as the beggining
                 $dateFin = $dateDebut;
             } else {
-                $dateFin=date("Y-m-d H:i:s",strtotime($_POST['event-end']));
-                if (strtotime($_POST['event-start']) > strtotime($_POST['event-end'])) {
+                $dateFin=date("Y-m-d H:i:s",strtotime($_POST['event_end']));
+                if (strtotime($_POST['event_start']) > strtotime($_POST['event_end'])) {
                     //If there is an end date, and if the end date is before the begining, we switch the dates
                     $tmp = $dateFin;
                     $dateFin = $dateDebut;
                     $dateDebut = $tmp;
                 }
             }
+
+            echo $dateDebut . "<br>" . $dateFin;
+
+            //If there is no values for min or max
+            if ($_POST['min'] == "") {
+                $_POST['min'] = "-1";
+            }
+            if ($_POST['max'] == "") {
+                $_POST['max'] = "-1";
+            }
+
+            //Removing accents from the address, changing the spaces and the comas as codes
+            $_POST['adresse'] = str_replace (" ", "%20", $_POST['adresse']);
+            $_POST['adresse'] = str_replace (",", "%2C", $_POST['adresse']);
+
             //We now try to insert a new event, quoting the dangerous values
-            $prepared = $bdd->prepare("INSERT INTO evenement (id, id_mot_clef, id_membre, nom, description, addresse, gps, date_debut, date_fin, effectif_min, effectif_max)
-                                    VALUES (NULL, :idt, :idm, :nom, :descr, :adr, :gps, :dated, :datef, :min, :max)");
+            $prepared = $bdd->prepare("INSERT INTO evenement (id, id_mot_clef, id_membre, nom, description, addresse, date_debut, date_fin, effectif_min, effectif_max)
+                                    VALUES (NULL, :idt, :idm, :nom, :descr, :adr, :dated, :datef, :min, :max)");
             $values = array (
               ':idt'    => $_POST['theme']
             , ':idm'    => $_SESSION['userInfo']['id']
             , ':nom'    => $bdd->quote($_POST['name'])
             , ':descr'  => $bdd->quote($_POST['description'])
             , ':adr'    => $bdd->quote($_POST['adresse'])
-            , ':gps'    => $bdd->quote($_POST['gps'])
             , ':dated'  => $dateDebut
             , ':datef'  => $dateFin
-            , ':min'    => $_POST['min']
-            , ':max'    => $_POST['max']
+            , ':min'    => ($_POST['min'] != "") ? $_POST['min'] : null
+            , ':max'    => ($_POST['max'] != "") ? $_POST['min'] : null
             );
             if ($prepared->execute($values)) {
-                echo 'ok';
+                header("location: ../EventList.php");
             }
         }
     }

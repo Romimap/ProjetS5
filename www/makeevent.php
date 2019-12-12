@@ -25,40 +25,34 @@ require($WWWPATH . "template/includes.php");
                 <img src="https://cdn.icon-icons.com/icons2/317/PNG/512/calendar-icon_34471.png" alt="rocket_contact"/>
                 <img src="https://cdn.icon-icons.com/icons2/317/PNG/512/calendar-icon_34471.png" alt="rocket_contact"/>
             </div>
-            <form method="post">
+            <form method="post" action="template/addEvent.php">
+                <?php $_SESSION['token']->formToken(); ?>
                 <h1>Créer un évènement</h1>
                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input type="text" name="txtName" class="form-control" placeholder="Nom de l'évènement *" value="" />
+                            <input type="text" name="name" class="form-control" placeholder="Nom de l'évènement *" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="text" name="txtAdresse" class="form-control" placeholder="Adresse *" value="" />
-                        </div>
-
-                        <div class="form-group">
-                            <input type="number" name="long" class="form-control" placeholder="Longitude *" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input type="number" name="lat" class="form-control" placeholder="Latitude *" value="" />
+                            <input type="text" name="adresse" class="form-control" placeholder="Adresse *" value="" />
                         </div>
 
                         <div class="form-group">
                             <label for="deb">Début:</label>
-                            <input type="date" name="deb" class="form-control" value="2020-01-01"
+                            <input type="date" name="event_start" class="form-control" value="2020-01-01"
                             min="2020-01-01" max="2021-12-31"/>
                         </div>
                         <div class="form-group">
                             <label for="fin">Fin:</label>
-                            <input type="date" name="fin" class="form-control" value="2020-01-01"
+                            <input type="date" name="event_end" class="form-control" value="2020-01-01"
                             min="2020-01-01" max="2021-12-31"/>
                         </div>
 
                         <div class="form-group">
-                            <input type="number" name="long" class="form-control" placeholder="Nombre minimum de participants:" value="" />
+                            <input type="number" name="min" class="form-control" placeholder="Nombre minimum de participants:" value="" min="1" />
                         </div>
                         <div class="form-group">
-                            <input type="number" name="lat" class="form-control" placeholder="Nombre maximum de participants:" value="" />
+                            <input type="number" name="max" class="form-control" placeholder="Nombre maximum de participants:" value="" min="1"/>
                         </div>
 
                         <div class="form-group">
@@ -92,14 +86,13 @@ require($WWWPATH . "template/includes.php");
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <textarea name="txtMsg" class="form-control" placeholder="Description de l'évènement" style="width: 100%; height: 427px;"></textarea>
+                            <textarea name="description" class="form-control" placeholder="Description de l'évènement" style="width: 100%; height: 427px;"></textarea>
                         </div>
-                        <center><div class="form-group">
-                            <input type="submit" name="btnSubmit" class="btnContact" value="Ajouter évènement" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" name="btnSubmit" class="btnContact" value="Valider les modifs" />
-                        </div></center>
+                        <center>
+                            <div class="form-group">
+                                <input type="submit" name="btnSubmit" class="btnContact" value="Ajouter évènement" />
+                            </div>
+                        </center>
                     </div>
                 </div>
             </form>
