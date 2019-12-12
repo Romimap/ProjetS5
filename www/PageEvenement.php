@@ -60,32 +60,93 @@ require($WWWPATH . "template/includes.php");
                     <br>
                     <?php //We check if the user is connected
                     if (isset($_SESSION['userInfo']['id']) && is_numeric($_SESSION['userInfo']['id'])) {
-                        //then we check if the user is registered for this event
-                        $prepared = $bdd->prepare("SELECT id FROM inscriptions WHERE id_evenement=:ide
-                        AND id_membre=:idm");
-                        $values = array(':ide' => $_GET['id'], ':idm' => $_SESSION['userInfo']['id']);
-                        if ($prepared->execute($values)) {
-                            if ($row = $prepared->fetch()) {
-                                //The user is registered for this event, we show him the unregister form
-                                echo '
-                                <form class="" action="template/unregister.php" method="post">';
-                                    $_SESSION['token']->formToken();
-                                echo '
-                                    <input type="hidden" name="id" value="'. $_GET['id'] .'">
-                                    <input class="btn btn-lg btn-danger btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Se désinscrire">
-                                </form>';
-                            } else {
-                                //The user is not registered for this event, we show him the register form
-                                echo '
-                                <form class="" action="template/register.php" method="post">';
-                                    $_SESSION['token']->formToken();
-                                echo '
-                                    <input type="hidden" name="id" value="'. $_GET['id'] .'">
-                                    <input class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="s\'inscrire">
-                                </form>';
+                        //then we check if the user is a contributor
+                        if ($_SESSION['userInfo']['role'] == 'Contributeur') {
+                            //the user is a contributor, we check if the user made this event, and if this event is still pending
+                            $prepared = $bdd->prepare("SELECT id, etat FROM evenement WHERE id=:ide
+                            AND id_membre=:idm AND DATEDIFF(NOW(), date_fin) < 0");
+                            $values = array(':ide' => $_GET['id'], ':idm' => $_SESSION['userInfo']['id']);
+                            if ($prepared->execute($values)) {
+                                if ($row = $prepared->fetch()) {
+                                    //The request returned a row, it means that the user created this event, and that the event is still pending
+                                    if ($row['etat'] == "Normal") {
+                                        //we display the cancel button
+                                        echo '
+                                        <form class="" action="template/cancelEvent.php" method="post">';
+                                            $_SESSION['token']->formToken();
+                                        echo '
+                                            <input type="hidden" name="id" value="'. $_GET['id'] .'">
+                                            <input type="hidden" name="type" value="cancel">
+                                            <input class="btn btn-lg btn-danger btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Annuler l\'evenement">
+                                        </form>';
+                                    } else {
+                                        //we display the reenact button
+                                        echo '
+                                        <form class="" action="template/cancelEvent.php" method="post">';
+                                            $_SESSION['token']->formToken();
+                                        echo '
+                                            <input type="hidden" name="id" value="'. $_GET['id'] .'">
+                                            <input type="hidden" name="type" value="reenact">
+                                            <input class="btn btn-lg btn-danger btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Reconstituer l\'evenement">
+                                        </form>';
+                                    }
+
+                                }
+                            }
+                        } else if ($_SESSION['userInfo']['role'] == 'Visiteur'){
+                            //the user is a visitor, we check if the event is canceled or isn't pending anymore
+                            $prepared = $bdd->prepare("SELECT etat, DATEDIFF(NOW(), date_fin) AS dateDiff FROM evenement WHERE id=:ide");
+                            $values = array(':ide' => $_GET['id']);
+                            if ($prepared->execute($values)) {
+                                if ($row = $prepared->fetch()) {
+                                    if ($row['etat'] == "Normal") {
+                                        // the event isnt canceled
+                                            //we can now check if the user is registered for this event
+                                            $prepared = $bdd->prepare("SELECT id FROM inscriptions WHERE
+                                                id_evenement=:ide AND id_membre=:idm");
+                                            $values = array(':ide' => $_GET['id'], ':idm' => $_SESSION['userInfo']['id']);
+                                            if ($prepared->execute($values)) {
+                                                if ($regRow = $prepared->fetch()) {
+                                                    if ($row['dateDiff'] < 0) {
+                                                        //the event is still to end
+                                                        //The user is registered for this event, we show him the unregister form
+                                                        echo '
+                                                        <form class="" action="template/unregister.php" method="post">';
+                                                            $_SESSION['token']->formToken();
+                                                        echo '
+                                                            <input type="hidden" name="id" value="'. $_GET['id'] .'">
+                                                            <input class="btn btn-lg btn-danger btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Se désinscrire">
+                                                        </form>';
+                                                    } else {
+                                                        //The event is finished, we display the comment form
+                                                        echo '
+                                                        <form class="" action="template/unregister.php" method="post">';
+                                                            $_SESSION['token']->formToken();
+                                                        echo '
+                                                            <input type="hidden" name="id" value="'. $_GET['id'] .'">
+                                                            <input class="btn btn-lg btn-danger btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="COMMENT">
+                                                        </form>';
+                                                    }
+                                                } else {
+                                                    //The user is not registered for this event
+                                                    if ($row['dateDiff'] < 0) {
+                                                        //The event isn't finished yet, we show him the register form
+                                                        echo '
+                                                        <form class="" action="template/register.php" method="post">';
+                                                            $_SESSION['token']->formToken();
+                                                        echo '
+                                                            <input type="hidden" name="id" value="'. $_GET['id'] .'">
+                                                            <input class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="s\'inscrire">
+                                                        </form>';
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
-                    } ?>
+                     ?>
                 </div>
             </div>
         </div>
