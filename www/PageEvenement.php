@@ -16,7 +16,7 @@ require($WWWPATH . "template/includes.php");
             //If we dont have an id to work with, we redirect
             header('location: EventList.php');
         }
-        $prepared = $bdd->prepare("SELECT membres.id as uid, username, evenement.nom, mot, description, email, telephone, adresse
+        $prepared = $bdd->prepare("SELECT membres.id as uid, username, evenement.nom, mot, description, email, telephone, addresse, gps
             FROM evenement, membres, taxonomie
             WHERE evenement.id_membre = membres.id AND evenement.id_mot_clef = taxonomie.id
             AND evenement.id = :id");
@@ -36,13 +36,13 @@ require($WWWPATH . "template/includes.php");
             <hr>
             <div class="row">
                 <div class="col-sm-8">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11880.492291371422!2d12.4922309!3d41.8902102!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x28f1c82e908503c4!2sColosseo!5e0!3m2!1sit!2sit!4v1524815927977" width="100%" height="640" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <iframe src="<?php echo "https://maps.google.com/maps?q=" . $row['addresse'] . "&hl=fr&z=15&output=embed"; ?>" width="100%" height="640" frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>
                 <div class="col-sm-4" id="contact2">
                     <h3><?php echo $row['mot']; ?></h3>
                     <hr class="col-6">
                     <br>
-                    <i class="fas fa-globe" style="color:#000"></i><?php echo $row['adresse']; ?><br>
+                    <i class="fas fa-globe" style="color:#000"></i><?php echo $row['addresse']; ?><br>
                     <br>
                     <p><?php echo $row['description']; ?></p>
                     <br>
