@@ -20,7 +20,7 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
     //Token check
     if ($_SESSION['token']->verify($_POST['token'])) {
         //we check if the form is valid
-        if (isset($_POST['id']) && is_numeric($_POST['id'])) {
+        if (isset($_POST['id']) && ctype_digit($_POST['id'])) {
             //From now on, we will consider that the form is complete, valid and
     	    //was sent by the owner of the session
             $userId = $_SESSION['userInfo']['id'];

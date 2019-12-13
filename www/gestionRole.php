@@ -11,7 +11,7 @@ if (isset($_SESSION['userInfo']['role']) && $_SESSION['userInfo']['role'] == "Ad
         //Token check
         if ($_SESSION['token']->verify($_POST['token'])) {
             //we check if the form is valid
-            if (isset($_POST['id']) && is_numeric($_POST['id'])
+            if (isset($_POST['id']) && ctype_digit($_POST['id'])
             &&  isset($_POST['role']) && ($_POST['role'] == "Visiteur"
                                        || $_POST['role'] == "Contributeur"
                                        || $_POST['role'] == "Admin")) {

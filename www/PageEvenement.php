@@ -12,7 +12,7 @@ require($WWWPATH . "template/includes.php");
      <body>
         <?php include($WWWPATH . "template/menu/menu.php"); ?>
         <?php
-        if (!(isset($_GET['id']) && is_numeric($_GET['id']))) {
+        if (!(isset($_GET['id']) && ctype_digit($_GET['id']))) {
             //If we dont have an id to work with, we redirect
             header('location: EventList.php');
         }
@@ -67,7 +67,7 @@ require($WWWPATH . "template/includes.php");
                     // Comment: the user is a visitor, the user is registered and the event is finished
 
                     //We check if the user is connected
-                    if (isset($_SESSION['userInfo']['id']) && is_numeric($_SESSION['userInfo']['id'])) {
+                    if (isset($_SESSION['userInfo']['id']) && ctype_digit($_SESSION['userInfo']['id'])) {
                         //then we check if the user is a contributor
                         if ($_SESSION['userInfo']['role'] == 'Contributeur') {
                             //the user is a contributor, we check if the user made this event, and if this event is still pending

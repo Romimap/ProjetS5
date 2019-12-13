@@ -17,8 +17,8 @@ require($WWWPATH . "template/includes.php");
         //page display
     	require($WWWPATH . "template/sql.php");
         //We check that GET[id] contains a numeric value, if not we try to set it as the id of the user
-    	if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-            if (isset($_SESSION['userInfo']['id']) && is_numeric($_SESSION['userInfo']['id'])) {
+    	if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
+            if (isset($_SESSION['userInfo']['id']) && ctype_digit($_SESSION['userInfo']['id'])) {
                 $_GET['id'] = $_SESSION['userInfo']['id'];
             } else {
                 //if not we exit
@@ -212,7 +212,7 @@ require($WWWPATH . "template/includes.php");
                                 if (isset($_SESSION['userInfo']['id']) && $_GET['id'] == $_SESSION['userInfo']['id']) { ?>
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <?php
-                                    if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+                                    if (isset($_GET['id']) && ctype_digit($_GET['id'])) {
                                         if ($_SESSION['userInfo']['role'] == 'Visiteur') {
                                             $prepared = $bdd->prepare("SELECT evenement.id AS eid, nom, date_debut, date_fin FROM inscriptions, evenement
                                             WHERE inscriptions.id_evenement=evenement.id AND inscriptions.id_membre=:id");

@@ -38,7 +38,7 @@ require($WWWPATH . "template/includes.php");
                         if (isset($_POST['token']) && isset($_SESSION['token'])) {
                             //Token check
                             if ($_SESSION['token']->verify($_POST['token'])) {
-                                if (isset($_POST['parentId']) && is_numeric($_POST['parentId'])) {
+                                if (isset($_POST['parentId']) && ctype_digit($_POST['parentId'])) {
                                     //We have a valid and signed form
                                     $parentId = $_POST['parentId'];
                                 }

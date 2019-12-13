@@ -18,9 +18,9 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
             && isset($_POST['event_end'])
             && isset($_POST['description'])//(dangerous)
             && isset($_POST['adresse'])//(dangerous)
-            && isset($_POST['min']) && ($_POST['min'] == "" || is_numeric($_POST['min']))
-            && isset($_POST['max']) && ($_POST['max'] == "" || is_numeric($_POST['max']))
-            && isset($_POST['theme']) && is_numeric($_POST['theme'])) {
+            && isset($_POST['min']) && ($_POST['min'] == "" || ctype_digit($_POST['min']))
+            && isset($_POST['max']) && ($_POST['max'] == "" || ctype_digit($_POST['max']))
+            && isset($_POST['theme']) && ctype_digit($_POST['theme'])) {
             //The form is complete, but there are still dangerous values
 
             //First we convert the dates to the mysql format

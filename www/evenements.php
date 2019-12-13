@@ -41,7 +41,7 @@ require($WWWPATH . "template/includes.php");
 
 
             //values check
-            if (!(isset($_GET['taxId']) && is_numeric($_GET['taxId']))) {
+            if (!(isset($_GET['taxId']) && ctype_digit($_GET['taxId']))) {
                 $ancestor = 0;
             } else {
                 $ancestor = $_GET['taxId'];

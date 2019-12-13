@@ -13,8 +13,8 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
     if ($_SESSION['token']->verify($_POST['token'])) {
         echo 'b';
         //we check if the form is valid
-        if (isset($_POST['id']) && is_numeric($_POST['id'])
-        && isset($_SESSION['userInfo']['id']) && is_numeric($_SESSION['userInfo']['id'])) {
+        if (isset($_POST['id']) && ctype_digit($_POST['id'])
+        && isset($_SESSION['userInfo']['id']) && ctype_digit($_SESSION['userInfo']['id'])) {
             //the form is safe
             //We can now unregister the client
             $prepared = $bdd->prepare("DELETE FROM inscriptions WHERE id_membre=:idm AND id_evenement=:ide");
