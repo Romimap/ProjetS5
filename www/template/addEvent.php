@@ -9,11 +9,8 @@ session_start();
 
 //We need a token and an instance of the class token
 if (isset($_POST['token']) && isset($_SESSION['token'])) {
-    echo 'a';
     //Token check
     if ($_SESSION['token']->verify($_POST['token'])) {
-        echo 'b';
-        var_dump($_POST);
     	//We check if the form is complete and valid
         if (isset($_SESSION['userInfo']['role']) && $_SESSION['userInfo']['role'] == 'Contributeur'
             && isset($_POST['name'])//(dangerous)
@@ -24,7 +21,6 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
             && isset($_POST['min']) && ($_POST['min'] == "" || is_numeric($_POST['min']))
             && isset($_POST['max']) && ($_POST['max'] == "" || is_numeric($_POST['max']))
             && isset($_POST['theme']) && is_numeric($_POST['theme'])) {
-                echo 'c';
             //The form is complete, but there are still dangerous values
 
             //First we convert the dates to the mysql format
