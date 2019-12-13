@@ -81,7 +81,7 @@ require($WWWPATH . "template/includes.php");
 	 document.getElementById("creationCompteid").onsubmit = function() {
 	     var valid = true;
 
-	     var regUsername = new RegExp('^[a-zA-Z]{1}\\w{4,9}$');
+	     var regUsername = new RegExp('^[a-zA-Z]{1}\\w{4,19}$');
 	     var regPass = new RegExp('^[a-zA-Z0-9$#!._]{8,20}$');
 
 	     //regex tests
