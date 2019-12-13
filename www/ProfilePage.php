@@ -213,7 +213,7 @@ require($WWWPATH . "template/includes.php");
                                 if (isset($_SESSION['userInfo']['id']) && $_GET['id'] == $_SESSION['userInfo']['id']) { ?>
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <?php
-                                    if (isset($_GET['id']) && ctype_digit($_GET['id'])) {
+                                    if (is_int($_SESSION['userInfo']['id'])) {
                                         if ($_SESSION['userInfo']['role'] == 'Visiteur') {
                                             $prepared = $bdd->prepare("SELECT evenement.id AS eid, nom, date_debut, date_fin FROM inscriptions, evenement
                                             WHERE inscriptions.id_evenement=evenement.id AND inscriptions.id_membre=:id");
@@ -240,17 +240,20 @@ require($WWWPATH . "template/includes.php");
                                                 }
                                             }
                                         } else if ($_SESSION['userInfo']['role'] == 'Contributeur') {
-                                            $prepared = $bdd->prepare("SELECT id AS eid, nom, date_debut, date_fin FROM evenement
-                                            WHERE id_membre=:id");
+                                            echo 'hello';
+                                            $prepared = $bdd->prepare("SELECT id AS eid, nom, date_debut, date_fin, UNIX_TIMESTAMP(date_debut) AS datets
+                                            FROM evenement
+                                            WHERE id_membre=:id
+                                            ORDER BY datets DESC");
                                             $values = array(':id' => $_GET['id']);
                                             if ($prepared->execute($values)) {
                                                 while ($row = $prepared->fetch()) {
                                                     setlocale(LC_ALL, 'fr_FR');
                                                     $dateDebut = strtotime($row['date_debut']);
-                                                    $dateStr = strftime("%e %B", $dateDebut);
+                                                    $dateStr = strftime("%e %b %G", $dateDebut);
                                                     $dateFin = strtotime($row['date_fin']);
                                                     if ($row['date_fin'] != $row['date_debut'])
-                                                        $dateStr = "du " . $dateStr . " au " . strftime("%e %B", $dateFin);
+                                                        $dateStr = $dateStr . " - " . strftime("%e %b %G", $dateFin);
                                                     echo '
                                                     <div class="col-12">
                                                         <div class="card mt-3">
