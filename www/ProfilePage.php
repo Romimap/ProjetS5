@@ -204,8 +204,10 @@ require($WWWPATH . "template/includes.php");
                                     <?php
                                     if (is_int($_SESSION['userInfo']['id'])) {
                                         if ($_SESSION['userInfo']['role'] == 'Visiteur') {
-                                            $prepared = $bdd->prepare("SELECT evenement.id AS eid, nom, date_debut, date_fin FROM inscriptions, evenement
-                                            WHERE inscriptions.id_evenement=evenement.id AND inscriptions.id_membre=:id");
+                                            $prepared = $bdd->prepare("SELECT evenement.id AS eid, nom, date_debut, date_fin, UNIX_TIMESTAMP(date_debut) AS datets, etat
+                                            FROM inscriptions, evenement
+                                            WHERE inscriptions.id_evenement=evenement.id AND inscriptions.id_membre=:id
+                                            ORDER BY datets DESC");
                                             $values = array(':id' => $_GET['id']);
                                             if ($prepared->execute($values)) {
                                                 while ($row = $prepared->fetch()) {
@@ -219,8 +221,9 @@ require($WWWPATH . "template/includes.php");
                                                     <div class="col-12">
                                                         <div class="card mt-3">
                                                             <div class="card-body">
-                                                                <h4 class="card-title">'. $row['nom'] .'</h4>
-                                                                <p class="card-text text-muted text-right">'. $dateStr .'</p>
+                                                                <h4 class="card-title">'. $row['nom'];
+                                                                if ($row['etat'] == "Annule") {echo  '<p class="text-danger d-inline"> Annulé </p></h4>';} else {echo '</h4>';}
+                                                    echo        '<p class="card-text text-muted text-right">'. $dateStr .'</p>
                                                                 <a href="PageEvenement.php?id='. $row['eid'] .'" class="stretched-link"></a>
                                                             </div>
                                                         </div>
@@ -229,7 +232,7 @@ require($WWWPATH . "template/includes.php");
                                                 }
                                             }
                                         } else if ($_SESSION['userInfo']['role'] == 'Contributeur') {
-                                            $prepared = $bdd->prepare("SELECT id AS eid, nom, date_debut, date_fin, UNIX_TIMESTAMP(date_debut) AS datets
+                                            $prepared = $bdd->prepare("SELECT id AS eid, nom, date_debut, date_fin, UNIX_TIMESTAMP(date_debut) AS datets, etat
                                             FROM evenement
                                             WHERE id_membre=:id
                                             ORDER BY datets DESC");
@@ -246,8 +249,9 @@ require($WWWPATH . "template/includes.php");
                                                     <div class="col-12">
                                                         <div class="card mt-3">
                                                             <div class="card-body">
-                                                                <h4 class="card-title">'. $row['nom'] .'</h4>
-                                                                <p class="card-text text-muted text-right">'. $dateStr .'</p>
+                                                            <h4 class="card-title">'. $row['nom'];
+                                                            if ($row['etat'] == "Annule") {echo  '<p class="text-danger d-inline"> Annulé </p></h4>';} else {echo '</h4>';}
+                                                echo        '<p class="card-text text-muted text-right">'. $dateStr .'</p>
                                                                 <a href="PageEvenement.php?id='. $row['eid'] .'" class="stretched-link"></a>
                                                             </div>
                                                         </div>
