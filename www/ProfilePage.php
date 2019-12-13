@@ -17,7 +17,6 @@ require($WWWPATH . "template/includes.php");
         //page display
     	require($WWWPATH . "template/sql.php");
         //We check that GET[id] contains a numeric value, if not we try to set it as the id of the user
-        var_dump($_SESSION['userInfo']['id']);
     	if (!(isset($_GET['id']) && ctype_digit($_GET['id']))) {
             if (isset($_SESSION['userInfo']['id']) && is_int($_SESSION['userInfo']['id'])) {
                 $_GET['id'] = $_SESSION['userInfo']['id'];
@@ -131,16 +130,6 @@ require($WWWPATH . "template/includes.php");
                         } ?>
 
                     </section>
-                    <section class="d-flex mt-5">
-                        <button class="btn btn-light bg-transparent mr-3 mb-3">
-                            <i class="fa fa-comments"></i>
-                            Contacter via messagerie
-                        </button>
-                        <button class="btn btn-light bg-transparent mr-3 mb-3">
-                            <i class="fa fa-warning"></i>
-                            Signaler cet utilisateur
-                        </button>
-                    </section>
                     <section class="mt-4">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
@@ -240,7 +229,6 @@ require($WWWPATH . "template/includes.php");
                                                 }
                                             }
                                         } else if ($_SESSION['userInfo']['role'] == 'Contributeur') {
-                                            echo 'hello';
                                             $prepared = $bdd->prepare("SELECT id AS eid, nom, date_debut, date_fin, UNIX_TIMESTAMP(date_debut) AS datets
                                             FROM evenement
                                             WHERE id_membre=:id
