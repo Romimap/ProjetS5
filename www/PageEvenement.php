@@ -16,7 +16,7 @@ require($WWWPATH . "template/includes.php");
             //If we dont have an id to work with, we redirect
             header('location: EventList.php');
         }
-        $prepared = $bdd->prepare("SELECT membres.id as uid, username, evenement.nom, mot, description, email, telephone, addresse, gps
+        $prepared = $bdd->prepare("SELECT membres.id as uid, username, evenement.nom, mot, description, email, telephone, addresse, etat
             FROM evenement, membres, taxonomie
             WHERE evenement.id_membre = membres.id AND evenement.id_mot_clef = taxonomie.id
             AND evenement.id = :id");
@@ -42,6 +42,9 @@ require($WWWPATH . "template/includes.php");
                     <iframe src="<?php echo "https://maps.google.com/maps?q=" . $gmapAdr . "&hl=fr&z=15&output=embed"; ?>" width="100%" height="640" frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>
                 <div class="col-sm-4" id="contact2">
+                    <?php if ($row['etat'] == "Annule") {
+                        echo '<h3 class="text-danger"> Annulé </h3>';
+                    } ?>
                     <h3><?php echo $row['mot']; ?></h3>
                     <hr class="col-6">
                     <br>
@@ -93,7 +96,7 @@ require($WWWPATH . "template/includes.php");
                                             $_SESSION['token']->formToken();
                                         echo '
                                             <input type="hidden" name="id" value="'. $_GET['id'] .'">
-                                            <input class="btn btn-lg btn-danger btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Reconstituer l\'evenement">
+                                            <input class="btn btn-primary btn-lg btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Reconstituer l\'evenement">
                                         </form>';
                                     }
 
