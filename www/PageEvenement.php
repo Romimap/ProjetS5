@@ -67,7 +67,7 @@ require($WWWPATH . "template/includes.php");
                     // Comment: the user is a visitor, the user is registered and the event is finished
 
                     //We check if the user is connected
-                    if (isset($_SESSION['userInfo']['id']) && ctype_digit($_SESSION['userInfo']['id'])) {
+                    if (isset($_SESSION['userInfo']['id']) && is_int($_SESSION['userInfo']['id'])) {
                         //then we check if the user is a contributor
                         if ($_SESSION['userInfo']['role'] == 'Contributeur') {
                             //the user is a contributor, we check if the user made this event, and if this event is still pending

@@ -14,7 +14,7 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
         echo 'b';
         //we check if the form is valid
         if (isset($_POST['id']) && ctype_digit($_POST['id'])
-        && isset($_SESSION['userInfo']['id']) && ctype_digit($_SESSION['userInfo']['id'])) {
+        && isset($_SESSION['userInfo']['id']) && is_int($_SESSION['userInfo']['id'])) {
             //the form is safe
             //First we check that the user isnt already registered to this events
             $prepared = $bdd->prepare("SELECT id FROM inscriptions WHERE id_membre=:idm AND id_evenement=:ide");

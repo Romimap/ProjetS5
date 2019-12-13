@@ -17,8 +17,9 @@ require($WWWPATH . "template/includes.php");
         //page display
     	require($WWWPATH . "template/sql.php");
         //We check that GET[id] contains a numeric value, if not we try to set it as the id of the user
-    	if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
-            if (isset($_SESSION['userInfo']['id']) && ctype_digit($_SESSION['userInfo']['id'])) {
+        var_dump($_SESSION['userInfo']['id']);
+    	if (!(isset($_GET['id']) && ctype_digit($_GET['id']))) {
+            if (isset($_SESSION['userInfo']['id']) && is_int($_SESSION['userInfo']['id'])) {
                 $_GET['id'] = $_SESSION['userInfo']['id'];
             } else {
                 //if not we exit
