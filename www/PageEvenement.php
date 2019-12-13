@@ -84,7 +84,6 @@ require($WWWPATH . "template/includes.php");
                                             $_SESSION['token']->formToken();
                                         echo '
                                             <input type="hidden" name="id" value="'. $_GET['id'] .'">
-                                            <input type="hidden" name="type" value="cancel">
                                             <input class="btn btn-lg btn-danger btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Annuler l\'evenement">
                                         </form>';
                                     } else {
@@ -94,7 +93,6 @@ require($WWWPATH . "template/includes.php");
                                             $_SESSION['token']->formToken();
                                         echo '
                                             <input type="hidden" name="id" value="'. $_GET['id'] .'">
-                                            <input type="hidden" name="type" value="reenact">
                                             <input class="btn btn-lg btn-danger btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Reconstituer l\'evenement">
                                         </form>';
                                     }
