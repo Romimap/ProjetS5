@@ -89,7 +89,11 @@ require($WWWPATH . "template/includes.php");
             <div class="col-12 col-md-9">
                 <div class="row">
                     <?php //We print the events based on the filters
-                        $prepared = $bdd->prepare("SELECT evenement.id AS eid, nom, description, mot, date_debut, date_fin FROM evenement, taxonomie WHERE id_mot_clef=taxonomie.id AND id_mot_clef=:idParent");
+                        $prepared = $bdd->prepare("SELECT evenement.id AS eid, nom, description, mot, date_debut, date_fin FROM evenement, taxonomie
+                            WHERE id_mot_clef=taxonomie.id
+                            AND id_mot_clef=:idParent
+                            AND DATEDIFF(NOW(), date_fin) < 0
+                            AND etat='Normal'");
                         $values = array(':idParent' => $parentId);
                         if ($prepared->execute($values)) {
                             while ($row = $prepared->fetch()) {
