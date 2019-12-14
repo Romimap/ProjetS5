@@ -8,6 +8,62 @@ require($WWWPATH . "template/includes.php");
     <head>
 	<?php include($WWWPATH . "template/head.html"); ?>
     <link rel="stylesheet" type="text/css" href="css/pageevent.css" media="screen" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript">
+        function starChange(n) {
+            switch (n) {
+                case 1:
+                    document.getElementById("star1").className="fa fa-star starchecked";
+                    document.getElementById("star2").className="fa fa-star";
+                    document.getElementById("star3").className="fa fa-star";
+                    document.getElementById("star4").className="fa fa-star";
+                    document.getElementById("star5").className="fa fa-star";
+                    break;
+                case 2:
+                    document.getElementById("star1").className="fa fa-star starchecked";
+                    document.getElementById("star2").className="fa fa-star starchecked";
+                    document.getElementById("star3").className="fa fa-star";
+                    document.getElementById("star4").className="fa fa-star";
+                    document.getElementById("star5").className="fa fa-star";
+                    break;
+                case 3:
+                    document.getElementById("star1").className="fa fa-star starchecked";
+                    document.getElementById("star2").className="fa fa-star starchecked";
+                    document.getElementById("star3").className="fa fa-star starchecked";
+                    document.getElementById("star4").className="fa fa-star";
+                    document.getElementById("star5").className="fa fa-star";
+                    break;
+                case 4:
+                    document.getElementById("star1").className="fa fa-star starchecked";
+                    document.getElementById("star2").className="fa fa-star starchecked";
+                    document.getElementById("star3").className="fa fa-star starchecked";
+                    document.getElementById("star4").className="fa fa-star starchecked";
+                    document.getElementById("star5").className="fa fa-star";
+                    break;
+                case 5:
+                    document.getElementById("star1").className="fa fa-star starchecked";
+                    document.getElementById("star2").className="fa fa-star starchecked";
+                    document.getElementById("star3").className="fa fa-star starchecked";
+                    document.getElementById("star4").className="fa fa-star starchecked";
+                    document.getElementById("star5").className="fa fa-star starchecked";
+                    break;
+                default:
+                    document.getElementById("star1").className="fa fa-star starchecked";
+                    document.getElementById("star2").className="fa fa-star starchecked";
+                    document.getElementById("star3").className="fa fa-star starchecked";
+                    document.getElementById("star4").className="fa fa-star";
+                    document.getElementById("star5").className="fa fa-star";
+                    n = 3;
+                    break;
+            }
+            document.getElementById("starFormValue").value = n;
+        }
+    </script>
+    <style media="screen">
+        .starchecked {
+            color: orange;
+        }
+    </style>
   </head>
      <body>
         <?php include($WWWPATH . "template/menu/menu.php"); ?>
@@ -111,7 +167,7 @@ require($WWWPATH . "template/includes.php");
                                     if ($row['etat'] == "Normal") {
                                         // the event isnt canceled
                                         //we can now check if the user is registered for this event
-                                        $prepared = $bdd->prepare("SELECT id FROM inscriptions WHERE
+                                        $prepared = $bdd->prepare("SELECT id, note, commentaire FROM inscriptions WHERE
                                             id_evenement=:ide AND id_membre=:idm");
                                         $values = array(':ide' => $_GET['id'], ':idm' => $_SESSION['userInfo']['id']);
                                         if ($prepared->execute($values)) {
@@ -129,12 +185,41 @@ require($WWWPATH . "template/includes.php");
                                                 } else {
                                                     //The event is finished, we display the comment form
                                                     echo '
-                                                    <form class="" action="template/unregister.php" method="post">';
+                                                    <hr class="col-6">
+                                                    <form class="" action="template/comment.php"  method="post">';
                                                         $_SESSION['token']->formToken();
                                                     echo '
+                                                        <input type="hidden" name="star" value="3" id="starFormValue">
                                                         <input type="hidden" name="id" value="'. $_GET['id'] .'">
-                                                        <input class="btn btn-lg btn-danger btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="COMMENT">
-                                                    </form>';
+                                                        <span class="fa fa-star starchecked" onclick="starChange(1);" id="star1"></span>
+                                                        <span class="fa fa-star starchecked" onclick="starChange(2);" id="star2"></span>
+                                                        <span class="fa fa-star starchecked" onclick="starChange(3);" id="star3"></span>
+                                                        <span class="fa fa-star" onclick="starChange(4);" id="star4"></span>
+                                                        <span class="fa fa-star" onclick="starChange(5);" id="star5"></span><br>
+                                                        <div class="form-group">
+                                                            <textarea name="comment" maxlength="240" class="form-control col-12" style="resize: none;height: 100px"></textarea>
+                                                            <small id="emailHelp" class="form-text text-muted">240 caractères max</small>
+                                                        </div>
+                                                        <input class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Laisser un commentaire !">
+                                                    </form>
+                                                    <br>
+                                                    <hr class="col-6">';
+                                                    //We now show the comment of the user if it exists
+                                                    if ($regRow['note'] != 0) {
+                                                        //We print the comment of the user
+                                                        echo '
+                                                        <p> Votre avis : </p>';
+                                                        for ($i = 0; $i < 5; $i++) {
+                                                            if ($i < $regRow['note'])
+                                                                echo '<span class="fa fa-star starchecked"></span>';
+                                                            else
+                                                                echo '<span class="fa fa-star"></span>';
+                                                        }
+                                                        if ($regRow['commentaire'] != "''") {
+                                                            echo '
+                                                            <p>' . substr($regRow['commentaire'], 1, -1) . '</p>';
+                                                        }
+                                                    }
                                                 }
                                             } else {
                                                 //The user is not registered for this event
@@ -158,6 +243,48 @@ require($WWWPATH . "template/includes.php");
                      ?>
                 </div>
             </div>
+            <?php
+            //We print 5 random comments if the event is finished
+            $prepared = $bdd->prepare("SELECT note, commentaire, username FROM inscriptions, membres, evenement
+            WHERE inscriptions.id_membre = membres.id
+            AND inscriptions.id_evenement = evenement.id
+            AND DATEDIFF(NOW(), date_fin) > 0
+            AND inscriptions.id_evenement = :ide
+            AND inscriptions.id_membre <> :idm
+            AND inscriptions.commentaire IS NOT NULL
+            AND inscriptions.note BETWEEN 1 AND 5
+            ORDER BY RAND()
+            LIMIT 5;");
+            if (isset($_SESSION['userInfo']['id'])) //If the user is connected, we exclude it from the search
+                $idmember = $_SESSION['userInfo']['id'];
+            else //If not we exclude the user with id -1, in other words we exclude nobody
+                $idmember = -1;
+            $values = array(':ide' => $_GET['id'], ':idm' => $idmember);
+            if ($prepared->execute($values)) {
+                echo '
+                <br>
+                <hr>
+                <br>
+                <div class="row">';
+                while ($row = $prepared->fetch()) {
+                    echo '
+                    <div class="col">
+                        <p>' . $row['username'] . '</p>';
+                        for ($i = 0; $i < 5; $i++) {
+                            if ($i < $row['note'])
+                                echo '<span class="fa fa-star starchecked"></span>';
+                            else
+                                echo '<span class="fa fa-star"></span>';
+                        }
+                    echo '
+                        <p>' . substr($row['commentaire'], 1, -1) . '</p>
+                    </div>';
+                }
+                echo '
+                </div>
+                <br>';
+            }
+             ?>
         </div>
         <?php include($WWWPATH . "template/bootstrapScripts.html"); ?>
     </body>
