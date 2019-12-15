@@ -87,9 +87,37 @@ require($WWWPATH . "template/includes.php");
             header('location: EventList.php');
         }
         ?>
-        <div class="container mt-5" id="container">
-            <h1 class="text-center"><?php echo $row['nom']; ?></h1>
-            <hr>
+        <div class="container mt-5" style="border-top-left-radius: 0; border-top-right-radius: 0; padding: 0" id="container">
+            <?php
+                //We display the photos
+                $prepared = $bdd->prepare("SELECT lien FROM photos WHERE id_evenement=:ide");
+                $values = array(':ide' => $_GET['id']);
+                if ($prepared->execute($values)) {
+                    echo '<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" style="height: 350px;">
+                            <div class="carousel-inner" style="height: 350px;">';
+                    if ($img = $prepared->fetch()) {
+                        echo '
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="template/' . $img['lien'] . '">
+                            </div>
+                        ';
+                    }
+                    while($img = $prepared->fetch()) {
+                        echo '
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="template/' . $img['lien'] . '">
+                            </div>
+                        ';
+                    }
+                    echo '</div>
+                        </div>';
+                }
+            ?>
+            <div class="row bg-dark text-light">
+                <div class="col">
+                    <h1 class="text-center"><?php echo $row['nom']; ?></h1>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-sm-8">
                     <?php //changing the spaces and the comas as codes
@@ -97,7 +125,7 @@ require($WWWPATH . "template/includes.php");
                     $gmapAdr  = str_replace (",", "%2C", $gmapAdr ); ?>
                     <iframe src="<?php echo "https://maps.google.com/maps?q=" . $gmapAdr . "&hl=fr&z=15&output=embed"; ?>" width="100%" height="640" frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>
-                <div class="col-sm-4" id="contact2">
+                <div class="col-sm-4 pr-5" id="contact2">
                     <?php if ($row['etat'] == "Annule") {
                         echo '<h3 class="text-danger"> Annulé </h3>';
                     } ?>
@@ -281,29 +309,6 @@ require($WWWPATH . "template/includes.php");
                 }
                 echo '
                 </div>';
-            }
-            //We display the photos
-            $prepared = $bdd->prepare("SELECT lien FROM photos WHERE id_evenement=:ide");
-            $values = array(':ide' => $_GET['id']);
-            if ($prepared->execute($values)) {
-                echo '<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" style="height: 350px;">
-                        <div class="carousel-inner" style="height: 350px;">';
-                if ($row = $prepared->fetch()) {
-                    echo '
-                        <div class="carousel-item active">
-                            <img class="d-block w-100" src="template/' . $row['lien'] . '">
-                        </div>
-                    ';
-                }
-                while($row = $prepared->fetch()) {
-                    echo '
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="template/' . $row['lien'] . '">
-                        </div>
-                    ';
-                }
-                echo '</div>
-                    </div>';
             }
             ?>
             <br>
