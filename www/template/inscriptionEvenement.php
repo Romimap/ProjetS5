@@ -31,7 +31,7 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
                 WHERE id=:idEvent
                 AND DATE(NOW()) < DATE(date_fin)
                 AND :idUser NOT IN (SELECT id_membre FROM inscriptions WHERE id_evenement=:idEventb)
-                AND (effectif_max IS NULL
+                AND (effectif_max = -1
                     OR effectif_max > (SELECT COUNT(*) FROM inscriptions WHERE id_evenement=:idEventc)
                 )");
             $values = array(':idEvent' => $eventId, ':idEventb' => $eventId, ':idEventc' => $eventId, ':idUser' => $userId);
