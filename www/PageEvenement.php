@@ -7,8 +7,8 @@ require($WWWPATH . "template/includes.php");
 <html lang="fr">
     <head>
 	<?php include($WWWPATH . "template/head.html"); ?>
-    <link rel="stylesheet" type="text/css" href="css/pageevent.css" media="screen" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/pageevent.css" media="screen"/>
+    <script src="https://kit.fontawesome.com/1fcdee38a3.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
         function starChange(n) {
             switch (n) {
@@ -126,24 +126,25 @@ require($WWWPATH . "template/includes.php");
                     <iframe src="<?php echo "https://maps.google.com/maps?q=" . $gmapAdr . "&hl=fr&z=15&output=embed"; ?>" width="100%" height="640" frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>
                 <div class="col-sm-4 pr-5" id="contact2">
+                    <br>
                     <?php if ($row['etat'] == "Annule") {
                         echo '<h3 class="text-danger"> Annulé </h3>';
                     } ?>
                     <h3><?php echo $row['mot']; ?></h3>
                     <hr class="col-6">
                     <br>
-                    <i class="fas fa-globe" style="color:#000"></i><?php echo $row['addresse']; ?><br>
+                    <i class="fas fa-map-pin"></i><br><?php echo substr($row['addresse'], 1, -1); ?><br>
                     <br>
-                    <p><?php echo $row['description']; ?></p>
+                    <p><?php echo substr($row['description'], 1, -1); ?></p>
                     <br>
                     <hr class="col-6">
-                    <i class="fas fa-phone" style="color:#000"></i> <a href="ProfilePage.php?id=<?php echo $row['uid']; ?>"><?php echo $row['username']; ?></a><br>
+                    <i class="fas fa-user"></i><a href="ProfilePage.php?id=<?php echo $row['uid']; ?>"><?php echo $row['username']; ?></a><br>
                     <br>
                     <?php
                     if ($row['telephone'] != "")
                         echo '<i class="fas fa-phone" style="color:#000"></i>'. $row['telephone']. '<br>';
                     if ($row['email'] != "")
-                        echo '<i class="fas fa-phone" style="color:#000"></i>'. $row['email']. '<br>';?>
+                        echo '<i class="fas fa-envelope"></i>'. $row['email']. '<br>';?>
                     <br>
                     <?php
                     //Here we display the form on the bottom of the page
