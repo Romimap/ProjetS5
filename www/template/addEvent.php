@@ -38,8 +38,6 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
                 }
             }
 
-            echo $dateDebut . "<br>" . $dateFin;
-
             //If there is no values for min or max
             if ($_POST['min'] == "") {
                 $_POST['min'] = "-1";
@@ -48,7 +46,14 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
                 $_POST['max'] = "-1";
             }
 
-            //We now try to insert a new event, quoting the dangerous values
+            //We invert min and max if max < min
+            if ($_POST['max'] < $_POST['min']) {
+                $tmp = $_POST['max'];
+                $_POST['max'] = $_POST['min'];
+                $_POST['min'] = $tmp;
+            }
+
+            //We try to insert a new event, quoting the dangerous values
             $prepared = $bdd->prepare("INSERT INTO evenement (id, id_mot_clef, id_membre, nom, description, addresse, date_debut, date_fin, effectif_min, effectif_max)
                                     VALUES (NULL, :idt, :idm, :nom, :descr, :adr, :dated, :datef, :min, :max)");
             $values = array (
@@ -63,8 +68,81 @@ if (isset($_POST['token']) && isset($_SESSION['token'])) {
             , ':max'    => ($_POST['max'] != "") ? $_POST['min'] : null
             );
             if ($prepared->execute($values)) {
+                //The event is now created we try to add the files to the server and database
+                $last_id = $bdd->lastInsertId();
+                var_dump($_FILES);
+                foreach ($_FILES['eventFile']['error'] as $k => $v) { //For each file
+                    if (!$v) { //If there is no error
+                        $target_dir = "uploadedFiles/";
+                        $target_fname = rand();
+                        $target_file = $target_dir . basename($_FILES["eventFile"]["name"][$k]);
+                        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+                        $uploadOk = 1;
+
+                        // Check if image file is a actual image or fake image
+                        $check = getimagesize($_FILES["eventFile"]["tmp_name"][$k]);
+                        if($check !== false) {
+                            echo "File is an image - " . $check["mime"] . ".";
+                            $uploadOk = 1;
+                        } else {
+                            echo "File is not an image.";
+                            $uploadOk = 0;
+                        }
+
+                        // Check if file already exists
+                        for ($i = 0; $i < 100; $i++) {
+                            if (!file_exists($target_dir . $target_fname . $i . '.' . $imageFileType)) { //We try to find a valid name
+                                $target_fname = $target_fname . $i;
+                                break;
+                            }
+                            if ($i == 99) { //If the loop ended, we cannot upload
+                                $uploadOk = 0;
+                                break;
+                            }
+                        }
+
+                        $target_file = $target_dir . $target_fname . '.' . $imageFileType;
+
+                        // Check file size
+                        if ($_FILES["eventFile"]["size"][$k] > 500000) {
+                            echo "Sorry, your file is too large.";
+                            $uploadOk = 0;
+                        }
+
+                        // Allow certain file formats
+                        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+                        && $imageFileType != "gif" ) {
+                            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                            $uploadOk = 0;
+                        }
+
+                        // Check if $uploadOk is set to 0 by an error
+                        if ($uploadOk == 0) {
+                            echo "Sorry, your file was not uploaded.";
+
+                        // if everything is ok, try to upload file
+                        } else {
+                            if (move_uploaded_file($_FILES["eventFile"]["tmp_name"][$k], $target_file)) {
+                                echo "The file ". basename( $_FILES["eventFile"]["name"][$k]). " has been uploaded.";
+                                //We now try to add the file to the database
+                                $prepared = $bdd->prepare("INSERT INTO photos (id_evenement, lien) VALUES (:ide, :link)");
+                                $values = array(':ide' => $last_id, ':link' => $target_file);
+                                if ($prepared->execute($values)) {
+                                    //upload + query ok
+                                }
+                            } else {
+                                echo "Sorry, there was an error uploading your file.";
+                            }
+                        }
+                    }
+                }
                 header("location: ../EventList.php");
             }
+
+
+            exit(0);
+
         }
     }
 }
