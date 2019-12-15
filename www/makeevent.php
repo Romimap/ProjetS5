@@ -25,7 +25,7 @@ require($WWWPATH . "template/includes.php");
                 <img src="https://cdn.icon-icons.com/icons2/317/PNG/512/calendar-icon_34471.png" alt="rocket_contact"/>
                 <img src="https://cdn.icon-icons.com/icons2/317/PNG/512/calendar-icon_34471.png" alt="rocket_contact"/>
             </div>
-            <form method="post" action="template/addEvent.php">
+            <form method="post" action="template/addEvent.php" enctype="multipart/form-data">
                 <?php $_SESSION['token']->formToken(); ?>
                 <h1>Créer un évènement</h1>
                <div class="row">
@@ -88,17 +88,17 @@ require($WWWPATH . "template/includes.php");
                         <div class="form-group">
                             <textarea name="description" class="form-control" placeholder="Description de l'évènement" style="width: 100%; height: 401px; resize: none;" maxlength="240"></textarea>
                         </div>
-                        <div class="form-group">
-                            <input type="file" name="imgs" class="form-control-file" placeholder="Description de l'évènement" multiple>
-                            <small id="emailHelp" class="form-text text-muted">L'ajout de plusieurs fichiers est possible</small>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="eventFile[]" id="customFile" multiple>
+                            <label class="custom-file-label" for="customFile">Choose file</label>
                         </div>
-                        <center>
-                            <div class="form-group">
-                                <input type="submit" name="btnSubmit" class="btnContact" value="Ajouter évènement" />
-                            </div>
-                        </center>
                     </div>
                 </div>
+                <center>
+                    <div class="form-group">
+                        <input type="submit" name="btnSubmit" class="btnContact mt-5" value="Ajouter évènement" />
+                    </div>
+                </center>
             </form>
     </div>
 
