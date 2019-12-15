@@ -41,9 +41,9 @@ require($WWWPATH . "template/includes.php");
                         <section class="mb-4 pb-1">
                             <?php //Event history display
                             if ($row['role'] == 'Contributeur') { //Created events
-                                    echo '<h3 class="h6 font-weight-light text-secondary text-uppercase">Derniers évenements créés</h3>';
+                                    echo '<h3 class="h6 font-weight-light text-secondary text-uppercase">Evenements à venir</h3>';
                                     echo '<div class="work-experience pt-2">';
-                                    $prepared = $bdd->prepare("SELECT nom, description, mot, UNIX_TIMESTAMP(date_debut) AS datets FROM evenement, taxonomie
+                                    $prepared = $bdd->prepare("SELECT evenement.id AS eid, nom, description, mot, etat, UNIX_TIMESTAMP(date_debut) AS datets FROM evenement, taxonomie
                                                                WHERE evenement.id_mot_clef=taxonomie.id
                                                                AND evenement.id_membre=:id
                                                                ORDER BY datets DESC
@@ -52,11 +52,18 @@ require($WWWPATH . "template/includes.php");
                                     if ($prepared->execute($values)) {
                                         while ($eventList = $prepared->fetch()) {
                                             echo '
-                                            <div class="work mb-4">
-                                                <strong class="h5 d-block text-secondary font-weight-bold mb-1">'. $eventList['nom'] .'</strong>
-                                                <strong class="h6 d-block text-warning mb-1">'. $eventList['mot'] .'</strong>
-                                                <p class="text-secondary">'. $eventList['description'] .'</p>
-                                            </div>';
+                                            <div class="col-12">
+                                                <div class="card mt-3">
+                                                    <div class="card-body">
+                                                        <h6 class="card-title">'. substr($eventList['nom'], 1, -1);
+                                                        if ($eventList['etat'] == "Annule") {echo  '<p class="text-danger d-inline"> Annulé </p></h4>';} else {echo '</h4>';}
+                                            echo        '
+                                                        <h6 class="card-subtitle text-muted">' . $eventList['mot'] . '
+                                                        <a href="PageEvenement.php?id='. $eventList['eid'] .'" class="stretched-link"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            ';
                                         }
                                         echo '</div>';
                                     }
