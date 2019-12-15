@@ -86,7 +86,11 @@ require($WWWPATH . "template/includes.php");
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <textarea name="description" class="form-control" placeholder="Description de l'évènement" style="width: 100%; height: 427px;"></textarea>
+                            <textarea name="description" class="form-control" placeholder="Description de l'évènement" style="width: 100%; height: 401px; resize: none;" maxlength="240"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" name="imgs" class="form-control-file" placeholder="Description de l'évènement" multiple>
+                            <small id="emailHelp" class="form-text text-muted">L'ajout de plusieurs fichiers est possible</small>
                         </div>
                         <center>
                             <div class="form-group">
