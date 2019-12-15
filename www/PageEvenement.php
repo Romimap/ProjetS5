@@ -263,7 +263,6 @@ require($WWWPATH . "template/includes.php");
             if ($prepared->execute($values)) {
                 echo '
                 <br>
-                <hr>
                 <br>
                 <div class="row">';
                 while ($row = $prepared->fetch()) {
@@ -281,10 +280,33 @@ require($WWWPATH . "template/includes.php");
                     </div>';
                 }
                 echo '
-                </div>
-                <br>';
+                </div>';
             }
-             ?>
+            //We display the photos
+            $prepared = $bdd->prepare("SELECT lien FROM photos WHERE id_evenement=:ide");
+            $values = array(':ide' => $_GET['id']);
+            if ($prepared->execute($values)) {
+                echo '<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" style="height: 350px;">
+                        <div class="carousel-inner" style="height: 350px;">';
+                if ($row = $prepared->fetch()) {
+                    echo '
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="template/' . $row['lien'] . '">
+                        </div>
+                    ';
+                }
+                while($row = $prepared->fetch()) {
+                    echo '
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="template/' . $row['lien'] . '">
+                        </div>
+                    ';
+                }
+                echo '</div>
+                    </div>';
+            }
+            ?>
+            <br>
         </div>
         <?php include($WWWPATH . "template/bootstrapScripts.html"); ?>
     </body>
