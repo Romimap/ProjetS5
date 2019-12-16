@@ -200,9 +200,6 @@ require($WWWPATH . "template/includes.php");
                                 <dl class="row mt-4 mb-4 pb-3">
                                     <dt class="col-sm-3">Nom & Prénom</dt>
                                     <dd class="col-sm-9"><?php echo "$row[nom] $row[prenom]"; ?></dd>
-
-                                    <dt class="col-sm-3">Anniversaire du compte</dt>
-                                    <dd class="col-sm-9"><?php echo "TODO date creation"; ?></dd>
                                 </dl>
                             </div>
                             <?php
