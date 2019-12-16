@@ -115,12 +115,6 @@ require($WWWPATH . "template/includes.php");
                     <form class="" action="EventList.php" method="post" id="taxonomyForm">
                         <?php $_SESSION['token']->formToken(); ?>
                         <input type="hidden" name="parentId" value="<?php echo $parentId; ?>" id="selectWord">
-                        <h3> Date </h3>
-                        <div class="formgroup" id="date-form">
-                                    <input class="form-control" type="date" name="event-date"
-                                       value=""
-                                       min="2020-01-01" max="2021-12-31">
-                        </div>
                         <hr>
                         <input class="form-control btn-primary" type="submit" value="Filtrer">
                     </form>
