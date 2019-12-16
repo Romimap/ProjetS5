@@ -17,15 +17,17 @@ CREATE TABLE evenement (
   nom VARCHAR(50) NOT NULL,
   description VARCHAR(240) NOT NULL,
   addresse VARCHAR(50) NOT NULL,
-  gps VARCHAR(50) NOT NULL,
   date_debut DATE NOT NULL,
   date_fin DATE NOT NULL,
   effectif_min INT(5) DEFAULT NULL,
   effectif_max INT(5) DEFAULT NULL,
+  etat VARCHAR(10) DEFAULT 'Normal',
   -- KEYS
   PRIMARY KEY (id),
   KEY k_taxonomie (id_mot_clef),
-  KEY k_membre (id_membre)
+  KEY k_membre (id_membre),
+  -- CONSTRAINTS
+  CONSTRAINT etat_check CHECK (etat IN ('Normal', 'Annule'))
   
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

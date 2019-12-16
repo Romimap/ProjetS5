@@ -1,4 +1,6 @@
-<!-- PAGE TEMPLATE -->
+<!-- PAGE TEMPLATE 
+	TMP PAGE
+-->
 <?php
 $WWWPATH = "/opt/lampp/htdocs/www/ProjetS5/www/";
 require($WWWPATH . "template/includes.php");
