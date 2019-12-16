@@ -29,6 +29,38 @@ require($WWWPATH . "template/includes.php");
                     <hr>
                     <h3>Mot clefs</h3>
                     <?php
+                        //FUNCTIONS
+
+                        //Returns true if id is a child of ancestor
+                        function isChild ($id, $ancestor, $array) {
+                            if ($id == $ancestor) {
+                                return true;
+                            }
+                            while ($id != 0) {
+                                $id = $array[$id];
+                                if ($id == $ancestor) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+
+                        //Returns a table $t[id] = mot/NULL, if the value is set to NULL, it
+                        //means that the id isnt a child of the ancestor
+                        function allChild ($ancestor, $array) {
+                            $ansArray = array();
+                            foreach ($array as $k => $v) {
+                                if (isChild($k, $ancestor, $array)) {
+                                    $ansArray[$k] = true;
+                                } else {
+                                    $ansArray[$k] = false;
+                                }
+                            }
+                            return $ansArray;
+                        }
+
+
+
                         //We check the taxonomy table to show the childs of the current word selected (parentId)
                         //Directory style
 
@@ -68,6 +100,15 @@ require($WWWPATH . "template/includes.php");
                                         </button>';
                                 }
                             }
+
+                            //We parse the taxonomy table onto an array, as $taxArray[id] = parent
+                            //Then we use this array to make a list of ids that are childs of an ancestor
+                            $taxArray = array();
+                            foreach ($row as $k => $v) {
+                                $taxArray[$row[$k]['id']] = $row[$k]['parent'];
+                            }
+                            $taxChilds = allChild($parentId, $taxArray);
+
                         }
                     ?>
                     <hr>
@@ -89,36 +130,37 @@ require($WWWPATH . "template/includes.php");
             <div class="col-12 col-md-9">
                 <div class="row">
                     <?php //We print the events based on the filters
-                        $prepared = $bdd->prepare("SELECT evenement.id AS eid, nom, description, mot, date_debut, date_fin FROM evenement, taxonomie
+                        $prepared = $bdd->prepare("SELECT evenement.id AS eid, taxonomie.id AS mid, nom, description, mot, date_debut, date_fin FROM evenement, taxonomie
                             WHERE id_mot_clef=taxonomie.id
-                            AND id_mot_clef=:idParent
                             AND DATEDIFF(NOW(), date_fin) < 0
                             AND etat='Normal'");
-                        $values = array(':idParent' => $parentId);
+                        $values = array();
                         if ($prepared->execute($values)) {
                             while ($row = $prepared->fetch()) {
-                                setlocale(LC_ALL, 'fr_FR');
-                                $dateDebut = strtotime($row['date_debut']);
-                                $dateStr = strftime("%e %B", $dateDebut);
-                                $dateFin = strtotime($row['date_fin']);
-                                if ($row['date_fin'] != $row['date_debut'])
-                                    $dateStr = "du " . $dateStr . " au " . strftime("%e %B", $dateFin);
-                                echo '
-                                <div class="col-3">
-                                    <div class="card mt-3">
-                                        <img src="" class="card-img-top" alt="">
-                                        <div class="card-body">
-                                            <h4 class="card-title">'. $row['nom'] .'</h4>
-                                            <h6 class="card-subtitle text-muted">'. $row['mot'] .'</h6>
-                                            <hr>
-                                            <p class="card-text">'. $row['description'] .'</p>
-                                            <hr>
-                                            <p class="card-text text-muted text-right">'. $dateStr .'</p>
-                                            <a href="PageEvenement.php?id='. $row['eid'] .'" class="stretched-link"></a>
+                                if ($taxChilds[$row['mid']]) {
+                                    setlocale(LC_ALL, 'fr_FR');
+                                    $dateDebut = strtotime($row['date_debut']);
+                                    $dateStr = strftime("%e %B", $dateDebut);
+                                    $dateFin = strtotime($row['date_fin']);
+                                    if ($row['date_fin'] != $row['date_debut'])
+                                        $dateStr = "du " . $dateStr . " au " . strftime("%e %B", $dateFin);
+                                    echo '
+                                    <div class="col-3">
+                                        <div class="card mt-3">
+                                            <img src="" class="card-img-top" alt="">
+                                            <div class="card-body">
+                                                <h4 class="card-title">'. $row['nom'] .'</h4>
+                                                <h6 class="card-subtitle text-muted">'. $row['mot'] .'</h6>
+                                                <hr>
+                                                <p class="card-text">'. $row['description'] .'</p>
+                                                <hr>
+                                                <p class="card-text text-muted text-right">'. $dateStr .'</p>
+                                                <a href="PageEvenement.php?id='. $row['eid'] .'" class="stretched-link"></a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                ';
+                                    ';
+                                }
                             }
                         }
                      ?>
