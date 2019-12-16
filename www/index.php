@@ -84,14 +84,11 @@ require($WWWPATH . "template/includes.php");
                             [ INFO ]
                         </div>
                         <div class="product-desc">
-                            <span class="product-price">
-                                $10
-                            </span>
-                            <small class="text-muted">Category</small>
-                            <a href="#" class="product-name"> Product</a>
+                            <small class="text-muted">Theme</small>
+                            <a href="#" class="product-name"> Nom évènement</a>
 
                             <div class="small m-t-xs">
-                                Many desktop publishing packages and web page editors now.
+                                description
                             </div>
                             <div class="m-t text-righ">
 
@@ -109,16 +106,11 @@ require($WWWPATH . "template/includes.php");
                             [ INFO ]
                         </div>
                         <div class="product-desc">
-                            <span class="product-price">
-                                $10
-                            </span>
-                            <small class="text-muted">Category</small>
-                            <a href="#" class="product-name"> Product</a>
-
-
+                            <small class="text-muted">Theme</small>
+                            <a href="#" class="product-name"> Nom évènement</a>
 
                             <div class="small m-t-xs">
-                                Many desktop publishing packages and web page editors now.
+                                description
                             </div>
                             <div class="m-t text-righ">
 
@@ -136,16 +128,11 @@ require($WWWPATH . "template/includes.php");
                             [ INFO ]
                         </div>
                         <div class="product-desc">
-                            <span class="product-price">
-                                $10
-                            </span>
-                            <small class="text-muted">Category</small>
-                            <a href="#" class="product-name"> Product</a>
-
-
+                            <small class="text-muted">Theme</small>
+                            <a href="#" class="product-name"> Nom évènement</a>
 
                             <div class="small m-t-xs">
-                                Many desktop publishing packages and web page editors now.
+                                description
                             </div>
                             <div class="m-t text-righ">
 
@@ -163,13 +150,11 @@ require($WWWPATH . "template/includes.php");
                             [ INFO ]
                         </div>
                         <div class="product-desc">
-                            <span class="product-price">
-                                $10
-                            </span>
-                            <small class="text-muted">Category</small>
-                            <a href="#" class="product-name"> Product</a>
+                            <small class="text-muted">Theme</small>
+                            <a href="#" class="product-name"> Nom évènement</a>
+
                             <div class="small m-t-xs">
-                                Many desktop publishing packages and web page editors now.
+                                description
                             </div>
                             <div class="m-t text-righ">
                                 <a href="#" class="btn btn-xs btn-outline btn-primary">Plus d'infos. <i class="fa fa-long-arrow-right"></i> </a>
