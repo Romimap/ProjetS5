@@ -1,4 +1,12 @@
 
+FIchier : Log_GroupeK.sql
+Auteurs :
+Romain FOURNIER 21814031
+Youssef BENHAMMADI 21807967
+Nom du groupe : K
+
+--------------------------------------------------------------------------------
+
 ---------- TEST t_bi_evenement ----------
 nom	date_debut	date_fin	effectif_min	effectif_max
 date inversée	2020-01-01	2022-02-02	0	0

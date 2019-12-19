@@ -1,14 +1,13 @@
--- -----------------------------------------------------
--- Groupe K
--- Membres :
---     - Benhammadi Youssef
---     - Fournier Romain
--- -----------------------------------------------------
+/*
+FIchier : Creation_GroupeK.sql
+Auteurs :
+Romain FOURNIER 21814031
+Youssef BENHAMMADI 21807967
+Nom du groupe : K
+*/
 
--- reset
-DROP DATABASE IF EXISTS ProjetBddGroupeK;
-CREATE DATABASE IF NOT EXISTS ProjetBddGroupeK;
 -- use
+CREATE DATABASE IF NOT EXISTS ProjetBddGroupeK;
 USE ProjetBddGroupeK;
 
 -- -----------------------------------------------------

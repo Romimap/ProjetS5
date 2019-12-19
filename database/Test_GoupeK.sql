@@ -1,3 +1,11 @@
+/*
+FIchier : Test_GroupeK.sql
+Auteurs :
+Romain FOURNIER 21814031
+Youssef BENHAMMADI 21807967
+Nom du groupe : K
+*/
+
 -- -----------------------------------------------------
 -- t_bi_evenement
 -- -----------------------------------------------------
