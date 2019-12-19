@@ -5,6 +5,11 @@
 --     - Fournier Romain
 -- -----------------------------------------------------
 
+-- reset
+DROP DATABASE IF EXISTS ProjetBddGroupeK;
+CREATE DATABASE IF NOT EXISTS ProjetBddGroupeK;
+-- use
+USE ProjetBddGroupeK;
 
 -- -----------------------------------------------------
 -- Création des tables et des contraintes
@@ -28,8 +33,8 @@ CREATE TABLE evenement (
   KEY k_membre (id_membre),
   -- CONSTRAINTS
   CONSTRAINT etat_check CHECK (etat IN ('Normal', 'Annule'))
-  
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE inscriptions (
@@ -42,8 +47,8 @@ CREATE TABLE inscriptions (
   PRIMARY KEY (id),
   KEY k_membre (id_membre),
   KEY k_evenement (id_evenement)
-  
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE membres (
   id INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
@@ -62,8 +67,8 @@ CREATE TABLE membres (
   -- CONSTRAINTS
   CONSTRAINT role_check CHECK (role IN ('Visiteur', 'Contributeur', 'Admin')),
   CONSTRAINT email_check CHECK (email LIKE '%@%')
-  
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE photos (
   id INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
@@ -72,8 +77,8 @@ CREATE TABLE photos (
   -- KEYS
   PRIMARY KEY (id),
   KEY k (id_evenement)
-  
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE taxonomie (
   id INT(11) NOT NULL UNIQUE AUTO_INCREMENT,
@@ -82,9 +87,8 @@ CREATE TABLE taxonomie (
   -- KEYS
   PRIMARY KEY (id),
   KEY k (parent)
-  
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------
 -- ajout des clefs étrangères
@@ -93,13 +97,130 @@ CREATE TABLE taxonomie (
 ALTER TABLE evenement
   ADD CONSTRAINT fk_evenement_membre FOREIGN KEY (id_membre) REFERENCES membres (id),
   ADD CONSTRAINT fk_evenement_taxonomie FOREIGN KEY (id_mot_clef) REFERENCES taxonomie (id);
-  
+
 ALTER TABLE inscriptions
   ADD CONSTRAINT fk_inscription_evenement FOREIGN KEY (id_evenement) REFERENCES evenement (id),
   ADD CONSTRAINT fk_inscription_membre FOREIGN KEY (id_membre) REFERENCES membres (id);
 
 ALTER TABLE photos
   ADD CONSTRAINT fk_photos_evenement FOREIGN KEY (id_evenement) REFERENCES evenement (id);
-  
+
 ALTER TABLE taxonomie
   ADD CONSTRAINT fk_taxonomie_taxonomie FOREIGN KEY (parent) REFERENCES taxonomie (id);
+
+-- -----------------------------------------------------
+-- insertions par défaut
+-- -----------------------------------------------------
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- compte admin par défaut, (le mot de passe devrait etre salté et hashé, il est laissé comme tel par soucis de lisibilité)
+INSERT INTO membres (username, password, email, role) VALUES
+('adminuser', 'pass', 'admin@email.fr', 'admin');
+
+-- racine de l'arbre des themes
+INSERT INTO taxonomie (id, parent, mot) VALUES (0, -1, 'Général');
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- -----------------------------------------------------
+-- triggers
+-- -----------------------------------------------------
+
+DELIMITER |
+
+CREATE TRIGGER t_bi_evenement BEFORE INSERT ON evenement FOR EACH ROW
+BEGIN
+  DECLARE m_tmp_effectif integer;
+  DECLARE m_tmp_date date;
+
+  IF NEW.effectif_min > NEW.effectif_max
+    THEN
+    SET m_tmp_effectif = NEW.effectif_min;
+    SET NEW.effectif_min = NEW.effectif_max;
+    SET NEW.effectif_max = m_tmp_effectif;
+  END IF;
+  IF UNIX_TIMESTAMP(date_debut) > UNIX_TIMESTAMP(date_fin)
+    THEN
+    SET m_tmp_date = NEW.date_fin;
+    SET NEW.date_fin = NEW.date_debut;
+    SET NEW.date_debut = m_tmp_date;
+  END IF;
+END |
+
+CREATE TRIGGER t_bu_inscriptions BEFORE UPDATE ON inscriptions FOR EACH ROW
+BEGIN
+  IF NEW.id_membre != OLD.id_membre
+    THEN
+    SET NEW.id_membre = OLD.id_membre
+  ENDIF
+  IF NEW.id_evenement != OLD.id_evenement
+    THEN
+    SET NEW.id_evenement = OLD.id_evenement
+  ENDIF
+  IF NEW.note < 1
+    THEN
+    SET NEW.note = 1;
+  ELSEIF NEW.note > 5
+    THEN
+    SET NEW.note = 5;
+  END IF;
+END |
+
+CREATE TRIGGER t_bi_inscriptions BEFORE INSERT ON inscriptions FOR EACH ROW
+BEGIN
+  IF (SELECT COUNT(*) FROM inscriptions WHERE id_evenement = NEW.id_evenement) >= (SELECT effectif_max FROM evenement WHERE id = NEW.id_evenement)
+    THEN
+    INSERT INTO LOGERROR(MESSAGE) VALUES ("ERREUR TROP DE MEMBRES DEJA INSCRITS");
+    SIGNAL SQLSTATE VALUE '45000' SET MESSAGE_TEXT ="ERREUR TROP DE MEMBRES DEJA INSCRITS";
+  END IF;
+END |
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procédures
+-- -----------------------------------------------------
+
+
+
+-- -----------------------------------------------------
+-- insertions
+-- par soucis de lisibilité, certains champs seront laissés comme NULL, et les mot de passes ne seront pas hashés
+-- -----------------------------------------------------
+
+--MEMBRES
+INSERT INTO membres (username, password, nom, prenom, email) VALUES
+('jdupont01', 'pass', 'Dupont', 'Jean', 'jean.dupont@email.fr'),
+('fred1995', 'pass', 'Leon', 'Frederic', 'fred.leon@email.fr'),
+('billybill', 'pass', 'Bill', 'Billy', 'billy2000@email.fr'),
+('gandalfthegray', 'pass', 'Mithrandir', 'Gray', 'gandalf@maiar.fr'),
+('shadowfax', 'pass', 'Shadow', 'Fax', 'shadowfax@horse.fr');
+-- définition d'un Contributeur
+UPDATE membres SET role = 'Contributeur' WHERE username = 'gandalfthegray';
+
+-- TAXONOMIE
+INSERT INTO taxonomie (id, parent, mot) VALUES
+(2, 0, 'sport'),
+(3, 0, 'musique'),
+(4, 1, 'football'),
+(5, 1, 'tenis'),
+(6, 2, 'concert'),
+(7, 2, 'festival');
+
+-- EVENEMENT
+INSERT INTO evenement (id_mot_clef, id_membre, nom, description, addresse, date_debut, date_fin, effectif_min, effectif_max) VALUES
+(4, 4, 'match de foot', 'un match de foot', 'stade de france', '2020-01-01', '2020-01-01', '100', '1000'),
+(6, 4, 'concert de rock', 'un concert de rock', 'comedie, montpellier', '2020-02-01', '2020-02-01', '0', '2');
+
+-- PHOTOS
+INSERT INTO photos (id_evenement, lien) VALUES
+(1, 'imageFoot.png'),
+(1, 'imageFoot2.gif'),
+(2, 'imageRock.jpg');
+
+-- INSCPTIONS
+INSERT INTO inscriptions (id_evenement, id_membre) VALUES
+(1, 1),
+(1, 2),
+(1, 3);
