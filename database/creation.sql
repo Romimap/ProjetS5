@@ -120,6 +120,7 @@ INSERT INTO membres (username, password, email, role) VALUES
 
 -- racine de l'arbre des themes
 INSERT INTO taxonomie (id, parent, mot) VALUES (0, -1, 'Général');
+UPDATE taxonomie SET id = 0, parent = -1 WHERE mot = 'Général';
 
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -131,8 +132,8 @@ DELIMITER |
 
 CREATE TRIGGER t_bi_evenement BEFORE INSERT ON evenement FOR EACH ROW
 BEGIN
-  DECLARE m_tmp_effectif integer;
-  DECLARE m_tmp_date date;
+  DECLARE m_tmp_effectif INT(10);
+  DECLARE m_tmp_date DATE;
 
   IF NEW.effectif_min > NEW.effectif_max
     THEN
@@ -140,7 +141,7 @@ BEGIN
     SET NEW.effectif_min = NEW.effectif_max;
     SET NEW.effectif_max = m_tmp_effectif;
   END IF;
-  IF UNIX_TIMESTAMP(date_debut) > UNIX_TIMESTAMP(date_fin)
+  IF UNIX_TIMESTAMP(NEW.date_debut) > UNIX_TIMESTAMP(NEW.date_fin)
     THEN
     SET m_tmp_date = NEW.date_fin;
     SET NEW.date_fin = NEW.date_debut;
@@ -152,12 +153,12 @@ CREATE TRIGGER t_bu_inscriptions BEFORE UPDATE ON inscriptions FOR EACH ROW
 BEGIN
   IF NEW.id_membre != OLD.id_membre
     THEN
-    SET NEW.id_membre = OLD.id_membre
-  ENDIF
+    SET NEW.id_membre = OLD.id_membre;
+  END IF;
   IF NEW.id_evenement != OLD.id_evenement
     THEN
-    SET NEW.id_evenement = OLD.id_evenement
-  ENDIF
+    SET NEW.id_evenement = OLD.id_evenement;
+  END IF;
   IF NEW.note < 1
     THEN
     SET NEW.note = 1;
@@ -186,10 +187,10 @@ DELIMITER ;
 
 -- -----------------------------------------------------
 -- insertions
--- par soucis de lisibilité, certains champs seront laissés comme NULL, et les mot de passes ne seront pas hashés
+-- par soucis de simplicité, certains champs seront laissés comme NULL, et les mot de passes ne seront pas hashés
 -- -----------------------------------------------------
 
---MEMBRES
+-- MEMBRES
 INSERT INTO membres (username, password, nom, prenom, email) VALUES
 ('jdupont01', 'pass', 'Dupont', 'Jean', 'jean.dupont@email.fr'),
 ('fred1995', 'pass', 'Leon', 'Frederic', 'fred.leon@email.fr'),
@@ -202,11 +203,12 @@ UPDATE membres SET role = 'Contributeur' WHERE username = 'gandalfthegray';
 -- TAXONOMIE
 INSERT INTO taxonomie (id, parent, mot) VALUES
 (2, 0, 'sport'),
-(3, 0, 'musique'),
-(4, 1, 'football'),
-(5, 1, 'tenis'),
-(6, 2, 'concert'),
-(7, 2, 'festival');
+(3, 0, 'musique');
+INSERT INTO taxonomie (id, parent, mot) VALUES
+(4, 2, 'football'),
+(5, 2, 'tenis'),
+(6, 3, 'concert'),
+(7, 3, 'festival');
 
 -- EVENEMENT
 INSERT INTO evenement (id_mot_clef, id_membre, nom, description, addresse, date_debut, date_fin, effectif_min, effectif_max) VALUES
