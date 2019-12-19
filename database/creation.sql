@@ -212,7 +212,7 @@ INSERT INTO taxonomie (id, parent, mot) VALUES
 
 -- EVENEMENT
 INSERT INTO evenement (id_mot_clef, id_membre, nom, description, addresse, date_debut, date_fin, effectif_min, effectif_max) VALUES
-(4, 4, 'match de foot', 'un match de foot', 'stade de france', '2020-01-01', '2020-01-01', '100', '1000'),
+(4, 4, 'match de foot', 'un match de foot', 'stade de france', '2020-01-01', '2020-01-05', '100', '1000'),
 (6, 4, 'concert de rock', 'un concert de rock', 'comedie, montpellier', '2020-02-01', '2020-02-01', '0', '2');
 
 -- PHOTOS
