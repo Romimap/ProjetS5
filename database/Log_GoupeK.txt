@@ -1,0 +1,65 @@
+
+---------- TEST t_bi_evenement ----------
+nom	date_debut	date_fin	effectif_min	effectif_max
+date inversée	2020-01-01	2022-02-02	0	0
+effectif inversé	2020-01-01	2020-01-01	5	15
+tout inversé	2020-01-01	2022-02-02	5	15
+
+---------- TEST t_bu_inscriptions ----------
+
+--- avant update
+user_id	username	nom_event	note
+2	jdupont01	match de foot	0
+3	fred1995	match de foot	0
+4	billybill	match de foot	0
+
+--- apres update
+user_id	username	nom_event	note
+2	jdupont01	match de foot	1
+3	fred1995	match de foot	5
+4	billybill	match de foot	1
+
+---------- TEST t_bi_inscriptions ----------
+
+--- avant insert
+
+--- apres insert
+user_id	username	nom_event
+2	jdupont01	concert de rock
+3	fred1995	concert de rock
+
+---------- TEST p_duree_evenement ----------
+duree_evenement
+5
+duree_evenement
+1
+
+---------- TEST p_inscription_count ----------
+inscription_count
+3
+inscription_count
+2
+
+---------- TEST p_is_admin ----------
+est_admin
+1
+est_admin
+0
+est_admin
+0
+est_admin
+0
+est_admin
+0
+
+---------- TEST p_is_contributeur ----------
+est_contributeur
+0
+est_contributeur
+0
+est_contributeur
+0
+est_contributeur
+0
+est_contributeur
+1
